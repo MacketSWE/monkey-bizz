@@ -17,7 +17,7 @@ const ChatInput: React.FC = () => {
 
   return (
     <div className={styles.chatInputContainer}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.inputForm}>
         <input
           type="text"
           value={message}

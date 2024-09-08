@@ -14,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
   return (
     <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        {children}
+        <div className={styles.scrollableContent}>{children}</div>
         <button
           className={styles.closeButton}
           onClick={() => setIsModalOpen(false)}

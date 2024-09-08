@@ -19,7 +19,16 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   max-width: 500px;
   width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
   animation: slideIn 0.3s ease-out;
+}
+
+.scrollableContent {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px; /* Add some padding for the scrollbar */
 }
 
 .closeButton {
@@ -30,6 +39,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  align-self: flex-end;
 }
 
 .closeButton:hover {
@@ -54,4 +64,23 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Add styles for the scrollbar */
+.scrollableContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollableContent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
