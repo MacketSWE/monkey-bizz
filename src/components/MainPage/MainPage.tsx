@@ -52,6 +52,12 @@ const MainPage: React.FC = () => {
         </button>
         <div className={styles.contentWrapper}>
           <h1 className={styles.header}>Monkey Bizz</h1>
+          <CEOCard
+            name="John Doe"
+            title="CEO & Founder"
+            imageUrl="https://raw.githubusercontent.com/MacketSWE/honey-ginger-assets/main/monkeyceo.png"
+            description="John Doe is the visionary leader behind Monkey Bizz, driving innovation and growth in the industry."
+          />
           <div className={styles.roleCardsContainer}>
             {roles.map((role, index) => (
               <RoleCard
@@ -62,12 +68,6 @@ const MainPage: React.FC = () => {
               />
             ))}
           </div>
-          <CEOCard
-            name="John Doe"
-            title="CEO & Founder"
-            imageUrl="https://raw.githubusercontent.com/MacketSWE/honey-ginger-assets/main/monkeyceo.png"
-            description="John Doe is the visionary leader behind Monkey Bizz, driving innovation and growth in the industry."
-          />
           <button
             className={styles.openModalButton}
             onClick={() => setIsModalOpen(true)}
