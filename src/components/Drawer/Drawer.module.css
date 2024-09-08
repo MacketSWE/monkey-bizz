@@ -1,0 +1,81 @@
+.drawer {
+  position: fixed;
+  top: 0;
+  left: -200px;
+  width: 200px;
+  height: 100%;
+  background-color: #f0f0f0;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.drawer.open {
+  left: 0;
+}
+
+.closeButton {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.closeButton:hover {
+  background-color: #ccc;
+}
+
+/* Add more styles for drawer content */
+
+.drawerContent h2 {
+  margin-bottom: 15px;
+}
+
+.drawerContent ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.drawerContent li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.drawerContent li:last-child {
+  border-bottom: none;
+}
+
+.drawerContent p {
+  margin-top: 20px;
+}
+
+.messageList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.messageItem {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.messageItem:last-child {
+  border-bottom: none;
+}
+
+.messageText {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.messageTime {
+  font-size: 12px;
+  color: #666;
+}
