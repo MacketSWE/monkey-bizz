@@ -10,6 +10,12 @@
   position: relative;
 }
 
+@media (max-width: 767px) {
+  .roleCard {
+    width: 90%;
+  }
+}
+
 .title {
   margin: 0 0 10px;
   font-size: 18px;

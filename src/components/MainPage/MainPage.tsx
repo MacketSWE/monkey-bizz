@@ -50,6 +50,12 @@ const MainPage: React.FC = () => {
             ? "Close Drawer"
             : "Open Drawer"}
         </button>
+        <button
+          className={styles.businessInfoButton}
+          onClick={() => setIsModalOpen(true)}
+        >
+          Business Info
+        </button>
         <div className={styles.contentWrapper}>
           <h1 className={styles.header}>Monkey Bizz</h1>
           <CEOCard
@@ -68,12 +74,6 @@ const MainPage: React.FC = () => {
               />
             ))}
           </div>
-          <button
-            className={styles.openModalButton}
-            onClick={() => setIsModalOpen(true)}
-          >
-            Open Modal
-          </button>
         </div>
         <ChatInput />
       </div>

@@ -74,3 +74,21 @@
 .openModalButton:hover {
   background-color: #218838;
 }
+
+.businessInfoButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.businessInfoButton:hover {
+  background-color: #45a049;
+}
