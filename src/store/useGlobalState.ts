@@ -12,13 +12,6 @@ interface GlobalState {
   setIsModalOpen: (isOpen: boolean) => void;
   messages: Message[];
   askQuestion: (question: string) => void;
-  addMessage: (question: string) => void;
-  updateMessageWithRoleAnswer: (
-    messageId: string,
-    roleId: string,
-    answer: string
-  ) => void;
-  updateMessageWithCEOAnswer: (messageId: string, answer: string) => void;
   roles: Role[];
   setRoleLoading: (index: number, isLoading: boolean) => void;
   isCEOLoading: boolean;
@@ -160,7 +153,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         }, {} as Record<string, { text: string; inputTokens: number; outputTokens: number }>),
       };
 
-      console.log(message);
+      console.log(message, "<--- this is the message");
 
       // Add message to history and save to localStorage
       set((state) => {
@@ -174,63 +167,6 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       console.error("Error in askQuestion:", error);
     }
   },
-  addMessage: (question) =>
-    set((state) => {
-      const newMessage: Message = {
-        id: Date.now().toString(),
-        model: "gpt-3.5-turbo",
-        question,
-        timestamp: Date.now(),
-        ceoAnswer: {
-          text: "",
-          inputTokens: 0,
-          outputTokens: 0,
-        },
-        roleAnsers: {},
-      };
-      const updatedMessages = [...state.messages, newMessage];
-      localStorage.setItem("messages", JSON.stringify(updatedMessages));
-      return { messages: updatedMessages };
-    }),
-  updateMessageWithRoleAnswer: (messageId, roleId, answer) =>
-    set((state) => {
-      const updatedMessages = state.messages.map((message) => {
-        if (message.id === messageId) {
-          return {
-            ...message,
-            roleAnsers: {
-              ...message.roleAnsers,
-              [roleId]: {
-                text: answer,
-                inputTokens: Math.floor(Math.random() * 100) + 50,
-                outputTokens: Math.floor(Math.random() * 200) + 100,
-              },
-            },
-          };
-        }
-        return message;
-      });
-      localStorage.setItem("messages", JSON.stringify(updatedMessages));
-      return { messages: updatedMessages };
-    }),
-  updateMessageWithCEOAnswer: (messageId, answer) =>
-    set((state) => {
-      const updatedMessages = state.messages.map((message) => {
-        if (message.id === messageId) {
-          return {
-            ...message,
-            ceoAnswer: {
-              text: answer,
-              inputTokens: Math.floor(Math.random() * 200) + 100,
-              outputTokens: Math.floor(Math.random() * 300) + 150,
-            },
-          };
-        }
-        return message;
-      });
-      localStorage.setItem("messages", JSON.stringify(updatedMessages));
-      return { messages: updatedMessages };
-    }),
   roles: initialRoles,
   setRoleLoading: (index, isLoading) =>
     set((state) => {
@@ -241,14 +177,10 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   isCEOLoading: false,
   setCEOLoading: (isLoading) => set({ isCEOLoading: isLoading }),
   clearMessageHistory: () =>
-    set((state) => {
+    set(() => {
       localStorage.removeItem("messages");
       return {
         messages: [],
-        roles: state.roles.map((role) => ({
-          ...role,
-          messages: [],
-        })),
       };
     }),
 }));
