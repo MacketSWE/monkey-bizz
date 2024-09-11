@@ -14,7 +14,7 @@ const MainPage: React.FC = () => {
     setIsModalOpen,
     isModalOpen,
     roles,
-    // Remove simulateLoading from here
+    clearMessageHistory, // Add this line
   } = useGlobalState();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -55,6 +55,12 @@ const MainPage: React.FC = () => {
           onClick={() => setIsModalOpen(true)}
         >
           Business Info
+        </button>
+        <button
+          className={styles.clearHistoryButton}
+          onClick={clearMessageHistory}
+        >
+          Clear History
         </button>
         <div className={styles.contentWrapper}>
           <h1 className={styles.header}>Monkey Bizz</h1>

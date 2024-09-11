@@ -1,4 +1,5 @@
 import create from "zustand";
+import { Role } from "../types/role";
 
 interface Message {
   id: number;
@@ -25,38 +26,57 @@ interface GlobalState {
   isCEOLoading: boolean;
   setCEOLoading: (isLoading: boolean) => void;
   simulateLoading: () => void;
+  clearMessageHistory: () => void;
 }
 
-const initialRoles = [
+const initialRoles: Role[] = [
   {
     title: "Developer",
     description: "Builds and maintains our software products.",
+    avatar: "",
+    personality: "",
+    id: "1",
     isLoading: false,
   },
   {
     title: "Designer",
     description: "Creates intuitive and appealing user interfaces.",
     isLoading: false,
+    avatar: "",
+    personality: "",
+    id: "2",
   },
   {
     title: "Product Manager",
     description: "Oversees product development and strategy.",
     isLoading: false,
+    avatar: "",
+    personality: "",
+    id: "3",
   },
   {
     title: "Marketing Specialist",
     description: "Promotes our products and brand.",
     isLoading: false,
+    avatar: "",
+    personality: "",
+    id: "4",
   },
   {
     title: "Customer Support",
     description: "Assists customers with inquiries and issues.",
     isLoading: false,
+    avatar: "",
+    personality: "",
+    id: "5",
   },
   {
     title: "Sales Representative",
     description: "Drives revenue through product sales.",
     isLoading: false,
+    avatar: "",
+    personality: "",
+    id: "6",
   },
 ];
 
@@ -66,7 +86,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
   isModalOpen: false,
   setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
-  messages: JSON.parse(localStorage.getItem("messages") || "[]"),
+  messages: [],
   addMessage: (text) =>
     set((state) => {
       const newMessage = { id: Date.now(), text, timestamp: Date.now() };
@@ -103,6 +123,13 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       }, 1000 + Math.random() * 1000);
     });
   },
+  clearMessageHistory: () =>
+    set((state) => ({
+      roles: state.roles.map((role) => ({
+        ...role,
+        messages: [],
+      })),
+    })),
 }));
 
 export default useGlobalState;
