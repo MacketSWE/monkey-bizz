@@ -1,6 +1,7 @@
 import create from "zustand";
 import { Role } from "../types/role";
 import { Message } from "../types/message";
+import { askLLM } from "../endpoints/askLLM";
 
 interface GlobalState {
   isDrawerOpen: boolean;
@@ -9,6 +10,7 @@ interface GlobalState {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   messages: Message[];
+  askQuestion: (question: string) => void;
   addMessage: (question: string) => void;
   updateMessageWithRoleAnswer: (
     messageId: string,
@@ -82,6 +84,39 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   isModalOpen: false,
   setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
   messages: [],
+  askQuestion: async (question) => {
+    try {
+      console.log("Asking question:", question);
+      const roles = get().roles;
+      const rolePromises = roles.map(async (role) => {
+        const answer = await askLLM([
+          { role: "system", content: role.personality },
+          { role: "user", content: question },
+        ]);
+        return answer;
+      });
+
+      const roleAnswers = await Promise.all(rolePromises);
+
+      const ceoAnswer = await askLLM([
+        { role: "system", content: "You are the CEO of the company" },
+        {
+          role: "user",
+          content: `This is the question: ${question}. This is what the others answered: ${roleAnswers.reduce(
+            (acc, answer) => acc + answer.content,
+            ""
+          )}`,
+        },
+      ]);
+
+      console.log("Role answers:", roleAnswers);
+      console.log("CEO answer:", ceoAnswer);
+
+      // You can process the answers further here if needed
+    } catch (error) {
+      console.error("Error in askQuestion:", error);
+    }
+  },
   addMessage: (question) =>
     set((state) => {
       const newMessage: Message = {

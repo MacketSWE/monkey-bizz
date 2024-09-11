@@ -4,7 +4,7 @@ import useGlobalState from "../../store/useGlobalState";
 
 const ChatInput: React.FC = () => {
   const [message, setMessage] = useState("");
-  const { addMessage, simulateLoading } = useGlobalState();
+  const { addMessage, simulateLoading, askQuestion } = useGlobalState();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -12,6 +12,7 @@ const ChatInput: React.FC = () => {
       addMessage(message);
       setMessage("");
       simulateLoading();
+      askQuestion(message);
     }
   };
 
