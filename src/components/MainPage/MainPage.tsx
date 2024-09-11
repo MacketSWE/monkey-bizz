@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MainPage.module.css";
-import { Drawer, DrawerContent } from "../Drawer/Drawer";
+import { Drawer } from "../Drawer/Drawer";
 import ChatInput from "../ChatInput/ChatInput";
 import Modal from "../Modal/Modal";
 import CEOCard from "../CEOCard/CEOCard";
 import RoleCard from "../RoleCard/RoleCard";
 import useGlobalState from "../../store/useGlobalState";
+import MessageHistory from "../MessageHistory/MessageHistory";
 
 const MainPage: React.FC = () => {
   const { isDrawerOpen, toggleDrawer, setIsModalOpen, isModalOpen, roles } =
@@ -73,7 +74,7 @@ const MainPage: React.FC = () => {
       </div>
       <Modal>
         {isMobile && isModalOpen ? (
-          <DrawerContent />
+          <MessageHistory />
         ) : (
           <>
             <h2>This is a Modal</h2>

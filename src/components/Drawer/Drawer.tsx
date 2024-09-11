@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "./Drawer.module.css";
 import useGlobalState from "../../store/useGlobalState";
+import MessageHistory from "../MessageHistory/MessageHistory";
 
 export const Drawer: React.FC = () => {
-  const { isDrawerOpen, setIsDrawerOpen, messages } = useGlobalState();
+  const { isDrawerOpen, setIsDrawerOpen } = useGlobalState();
 
   return (
     <div className={`${styles.drawer} ${isDrawerOpen ? styles.open : ""}`}>
@@ -13,27 +14,7 @@ export const Drawer: React.FC = () => {
       >
         Close Drawer
       </button>
-      <DrawerContent />
-    </div>
-  );
-};
-
-export const DrawerContent: React.FC = () => {
-  const { messages } = useGlobalState();
-
-  return (
-    <div className={styles.drawerContent}>
-      <h2>Message History</h2>
-      <ul className={styles.messageList}>
-        {messages.map((message) => (
-          <li key={message.id} className={styles.messageItem}>
-            <span className={styles.messageText}>{message.text}</span>
-            <span className={styles.messageTime}>
-              {new Date(message.timestamp).toLocaleString()}
-            </span>
-          </li>
-        ))}
-      </ul>
+      <MessageHistory />
     </div>
   );
 };

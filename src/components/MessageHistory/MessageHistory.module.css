@@ -1,0 +1,25 @@
+.messageHistory {
+  padding: 1rem;
+}
+
+.messageList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.messageItem {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0.5rem 0;
+}
+
+.messageText {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.messageTime {
+  font-size: 0.8rem;
+  color: #666;
+}

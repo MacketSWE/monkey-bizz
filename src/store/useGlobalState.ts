@@ -1,17 +1,6 @@
 import create from "zustand";
 import { Role } from "../types/role";
-
-interface Message {
-  id: number;
-  text: string;
-  timestamp: number;
-}
-
-interface RoleState {
-  title: string;
-  description: string;
-  isLoading: boolean;
-}
+import { Message } from "../types/message";
 
 interface GlobalState {
   isDrawerOpen: boolean;
@@ -20,8 +9,14 @@ interface GlobalState {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   messages: Message[];
-  addMessage: (text: string) => void;
-  roles: RoleState[];
+  addMessage: (question: string) => void;
+  updateMessageWithRoleAnswer: (
+    messageId: string,
+    roleId: string,
+    answer: string
+  ) => void;
+  updateMessageWithCEOAnswer: (messageId: string, answer: string) => void;
+  roles: Role[];
   setRoleLoading: (index: number, isLoading: boolean) => void;
   isCEOLoading: boolean;
   setCEOLoading: (isLoading: boolean) => void;
@@ -87,11 +82,57 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   isModalOpen: false,
   setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
   messages: [],
-  addMessage: (text) =>
+  addMessage: (question) =>
     set((state) => {
-      const newMessage = { id: Date.now(), text, timestamp: Date.now() };
-      const updatedMessages = [...state.messages, newMessage];
-      localStorage.setItem("messages", JSON.stringify(updatedMessages));
+      const newMessage: Message = {
+        id: Date.now().toString(),
+        model: "gpt-3.5-turbo",
+        question,
+        timestamp: Date.now(),
+        ceoAnswer: {
+          text: "",
+          inputTokens: 0,
+          outputTokens: 0,
+        },
+        roleAnsers: {},
+      };
+      return { messages: [...state.messages, newMessage] };
+    }),
+  updateMessageWithRoleAnswer: (messageId, roleId, answer) =>
+    set((state) => {
+      const updatedMessages = state.messages.map((message) => {
+        if (message.id === messageId) {
+          return {
+            ...message,
+            roleAnsers: {
+              ...message.roleAnsers,
+              [roleId]: {
+                text: answer,
+                inputTokens: Math.floor(Math.random() * 100) + 50,
+                outputTokens: Math.floor(Math.random() * 200) + 100,
+              },
+            },
+          };
+        }
+        return message;
+      });
+      return { messages: updatedMessages };
+    }),
+  updateMessageWithCEOAnswer: (messageId, answer) =>
+    set((state) => {
+      const updatedMessages = state.messages.map((message) => {
+        if (message.id === messageId) {
+          return {
+            ...message,
+            ceoAnswer: {
+              text: answer,
+              inputTokens: Math.floor(Math.random() * 200) + 100,
+              outputTokens: Math.floor(Math.random() * 300) + 150,
+            },
+          };
+        }
+        return message;
+      });
       return { messages: updatedMessages };
     }),
   roles: initialRoles,
@@ -104,21 +145,37 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   isCEOLoading: false,
   setCEOLoading: (isLoading) => set({ isCEOLoading: isLoading }),
   simulateLoading: () => {
-    const { setRoleLoading, setCEOLoading } = get();
+    const {
+      setRoleLoading,
+      setCEOLoading,
+      addMessage,
+      updateMessageWithRoleAnswer,
+      updateMessageWithCEOAnswer,
+    } = get();
+    const messageId = Date.now().toString();
+    addMessage("Sample question");
 
     // Set all roles to loading
     get().roles.forEach((_, index) => setRoleLoading(index, true));
 
-    // Simulate role loading
-    get().roles.forEach((_, index) => {
+    // Simulate role loading and answering
+    get().roles.forEach((role, index) => {
       setTimeout(() => {
         setRoleLoading(index, false);
+        updateMessageWithRoleAnswer(
+          messageId,
+          role.id,
+          `Sample answer from ${role.title}`
+        );
 
         // Check if all roles are done loading
         if (get().roles.every((role) => !role.isLoading)) {
           // Start CEO loading
           setCEOLoading(true);
-          setTimeout(() => setCEOLoading(false), 2000 + Math.random() * 1000);
+          setTimeout(() => {
+            setCEOLoading(false);
+            updateMessageWithCEOAnswer(messageId, "Sample CEO answer");
+          }, 2000 + Math.random() * 1000);
         }
       }, 1000 + Math.random() * 1000);
     });
