@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import styles from "./CEOCard.module.css";
 import { useCardState } from "../../store/useCardState";
 
@@ -20,7 +21,9 @@ const CEOCard: React.FC = () => {
       </div>
       <div className={styles.infoContainer}>
         <h2 className={styles.name}>{"CEO"}</h2>
-        <p className={styles.description}>{content || "How can I help?"}</p>
+        <div className={styles.description}>
+          <ReactMarkdown>{content || "How can I help?"}</ReactMarkdown>
+        </div>
         {isCEOLoading && (
           <div className={styles.loadingOverlay}>
             <div className={styles.loadingIndicator}>Loading...</div>

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import styles from "./RoleCard.module.css";
 import { Role } from "../../types/role";
 import { useCardState } from "../../store/useCardState";
@@ -15,7 +16,9 @@ const RoleCard: React.FC<RoleCardProps> = ({ role }) => {
   return (
     <div className={`${styles.roleCard} ${isLoading ? styles.loading : ""}`}>
       <h3 className={styles.title}>{role.title}</h3>
-      <p className={styles.description}>{content || "Ask me something"}</p>
+      <div className={styles.description}>
+        <ReactMarkdown>{content || "Ask me something"}</ReactMarkdown>
+      </div>
       {isLoading && <div className={styles.loadingIndicator}>Loading...</div>}
     </div>
   );
