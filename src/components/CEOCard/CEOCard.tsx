@@ -20,7 +20,7 @@ const CEOCard: React.FC = () => {
       </div>
       <div className={styles.infoContainer}>
         <h2 className={styles.name}>{"CEO"}</h2>
-        <p className={styles.description}>{content}</p>
+        <p className={styles.description}>{content || "How can I help?"}</p>
       </div>
       {isCEOLoading && (
         <div className={styles.loadingOverlay}>

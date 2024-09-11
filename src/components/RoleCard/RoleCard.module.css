@@ -2,12 +2,14 @@
   background-color: #f0f0f0;
   border-radius: 15px;
   padding: 20px;
+  height: 150px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: calc(33.33% - 20px);
   margin: 10px;
   box-sizing: border-box;
   position: relative;
+  overflow: hidden;
 }
 
 @media (max-width: 767px) {

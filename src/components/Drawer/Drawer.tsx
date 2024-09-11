@@ -12,7 +12,7 @@ export const Drawer: React.FC = () => {
         className={styles.closeButton}
         onClick={() => setIsDrawerOpen(false)}
       >
-        Close Drawer
+        Close
       </button>
       <MessageHistory />
     </div>

@@ -38,19 +38,17 @@ const MainPage: React.FC = () => {
     >
       {!isMobile && <Drawer />}
       <div className={styles.mainContent}>
-        <button className={styles.toggleButton} onClick={handleDrawerToggle}>
-          {isMobile
-            ? "Open Menu"
-            : isDrawerOpen
-            ? "Close Drawer"
-            : "Open Drawer"}
-        </button>
-        <button
+        {!isDrawerOpen && (
+          <button className={styles.toggleButton} onClick={handleDrawerToggle}>
+            {isMobile ? "History" : isDrawerOpen ? "Close Drawer" : "History"}
+          </button>
+        )}
+        {/* <button
           className={styles.businessInfoButton}
           onClick={() => setIsModalOpen(true)}
         >
           Business Info
-        </button>
+        </button> */}
         <div className={styles.contentWrapper}>
           <h1 className={styles.header}>Monkey Bizz</h1>
           <CEOCard />
