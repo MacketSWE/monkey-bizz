@@ -8,14 +8,8 @@ import RoleCard from "../RoleCard/RoleCard";
 import useGlobalState from "../../store/useGlobalState";
 
 const MainPage: React.FC = () => {
-  const {
-    isDrawerOpen,
-    toggleDrawer,
-    setIsModalOpen,
-    isModalOpen,
-    roles,
-    clearMessageHistory, // Add this line
-  } = useGlobalState();
+  const { isDrawerOpen, toggleDrawer, setIsModalOpen, isModalOpen, roles } =
+    useGlobalState();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -55,12 +49,6 @@ const MainPage: React.FC = () => {
           onClick={() => setIsModalOpen(true)}
         >
           Business Info
-        </button>
-        <button
-          className={styles.clearHistoryButton}
-          onClick={clearMessageHistory}
-        >
-          Clear History
         </button>
         <div className={styles.contentWrapper}>
           <h1 className={styles.header}>Monkey Bizz</h1>
