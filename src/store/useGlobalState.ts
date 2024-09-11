@@ -23,7 +23,6 @@ interface GlobalState {
   setRoleLoading: (index: number, isLoading: boolean) => void;
   isCEOLoading: boolean;
   setCEOLoading: (isLoading: boolean) => void;
-  simulateLoading: () => void;
   clearMessageHistory: () => void;
 }
 
@@ -84,7 +83,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
   isModalOpen: false,
   setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
-  messages: [],
+  messages: JSON.parse(localStorage.getItem("messages") || "[]"),
   askQuestion: async (question) => {
     try {
       console.log("Asking question:", question);
@@ -163,10 +162,12 @@ const useGlobalState = create<GlobalState>((set, get) => ({
 
       console.log(message);
 
-      // Add message to history
-      set((state) => ({
-        messages: [...state.messages, message],
-      }));
+      // Add message to history and save to localStorage
+      set((state) => {
+        const updatedMessages = [...state.messages, message];
+        localStorage.setItem("messages", JSON.stringify(updatedMessages));
+        return { messages: updatedMessages };
+      });
 
       // You can process the answers further here if needed
     } catch (error) {
@@ -187,7 +188,9 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         },
         roleAnsers: {},
       };
-      return { messages: [...state.messages, newMessage] };
+      const updatedMessages = [...state.messages, newMessage];
+      localStorage.setItem("messages", JSON.stringify(updatedMessages));
+      return { messages: updatedMessages };
     }),
   updateMessageWithRoleAnswer: (messageId, roleId, answer) =>
     set((state) => {
@@ -207,6 +210,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         }
         return message;
       });
+      localStorage.setItem("messages", JSON.stringify(updatedMessages));
       return { messages: updatedMessages };
     }),
   updateMessageWithCEOAnswer: (messageId, answer) =>
@@ -224,6 +228,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         }
         return message;
       });
+      localStorage.setItem("messages", JSON.stringify(updatedMessages));
       return { messages: updatedMessages };
     }),
   roles: initialRoles,
@@ -235,49 +240,17 @@ const useGlobalState = create<GlobalState>((set, get) => ({
     }),
   isCEOLoading: false,
   setCEOLoading: (isLoading) => set({ isCEOLoading: isLoading }),
-  simulateLoading: () => {
-    const {
-      setRoleLoading,
-      setCEOLoading,
-      addMessage,
-      updateMessageWithRoleAnswer,
-      updateMessageWithCEOAnswer,
-    } = get();
-    const messageId = Date.now().toString();
-    addMessage("Sample question");
-
-    // Set all roles to loading
-    get().roles.forEach((_, index) => setRoleLoading(index, true));
-
-    // Simulate role loading and answering
-    get().roles.forEach((role, index) => {
-      setTimeout(() => {
-        setRoleLoading(index, false);
-        updateMessageWithRoleAnswer(
-          messageId,
-          role.id,
-          `Sample answer from ${role.title}`
-        );
-
-        // Check if all roles are done loading
-        if (get().roles.every((role) => !role.isLoading)) {
-          // Start CEO loading
-          setCEOLoading(true);
-          setTimeout(() => {
-            setCEOLoading(false);
-            updateMessageWithCEOAnswer(messageId, "Sample CEO answer");
-          }, 2000 + Math.random() * 1000);
-        }
-      }, 1000 + Math.random() * 1000);
-    });
-  },
   clearMessageHistory: () =>
-    set((state) => ({
-      roles: state.roles.map((role) => ({
-        ...role,
+    set((state) => {
+      localStorage.removeItem("messages");
+      return {
         messages: [],
-      })),
-    })),
+        roles: state.roles.map((role) => ({
+          ...role,
+          messages: [],
+        })),
+      };
+    }),
 }));
 
 export default useGlobalState;

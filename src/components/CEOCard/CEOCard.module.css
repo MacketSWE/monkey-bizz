@@ -41,6 +41,7 @@
   width: 100%;
   min-height: 120px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .name {
@@ -65,17 +66,21 @@
   opacity: 0.7;
 }
 
+.loading .infoContainer {
+  opacity: 0.7;
+}
+
 .loadingOverlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 90px; /* Adjust this value to match the top padding of infoContainer */
+  left: 20px; /* Adjust this value to match the left padding of infoContainer */
+  right: 20px; /* Adjust this value to match the right padding of infoContainer */
+  bottom: 20px; /* Adjust this value to match the bottom padding of infoContainer */
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 15px;
+  border-radius: 0 0 15px 15px; /* Adjust to match the bottom corners of infoContainer */
 }
 
 .loadingIndicator {
