@@ -9,7 +9,7 @@ const MessageHistory: React.FC = () => {
 
   return (
     <div className={styles.messageHistory}>
-      <h2>Message History</h2>
+      <h2 className={styles.messageHistoryTitle}>Message History</h2>
       <ul className={styles.messageList}>
         {messages.map((message) => (
           <li key={message.id} className={styles.messageItem}>

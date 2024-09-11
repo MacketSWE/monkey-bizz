@@ -1,4 +1,6 @@
-export const askLLM = async (messages, model) => {
+import { LLMMessage } from "../types/llmMessage";
+
+export const askLLM = async (messages: LLMMessage[], model = "gpt-4o-mini") => {
   const res = await fetch(`https://honeyginger-dev.onrender.com/api/quiz`, {
     method: "POST",
     headers: {

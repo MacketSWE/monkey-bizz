@@ -1,17 +1,17 @@
 .drawer {
   position: fixed;
   top: 0;
-  left: -300px; /* Changed from right to left */
+  left: -300px;
   width: 300px;
   height: 100%;
   background-color: #fff;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Changed shadow direction */
-  transition: left 0.3s ease-in-out; /* Changed from right to left */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease-in-out;
   z-index: 1000;
 }
 
 .drawer.open {
-  left: 0; /* Changed from right to left */
+  left: 0;
 }
 
 .closeButton {
