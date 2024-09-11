@@ -2,6 +2,7 @@ import create from "zustand";
 import { Role } from "../types/role";
 import { Message } from "../types/message";
 import { askLLM } from "../endpoints/askLLM";
+import { useCardState } from "./useCardState";
 
 interface GlobalState {
   isDrawerOpen: boolean;
@@ -89,15 +90,39 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       console.log("Asking question:", question);
       const roles = get().roles;
       const rolePromises = roles.map(async (role) => {
+        const { setCards: setCardsPre, cards: cardsPre } =
+          useCardState.getState();
+        setCardsPre({
+          ...cardsPre,
+          [role.id]: {
+            content: "",
+            isLoading: true,
+          },
+        });
         const answer = await askLLM([
           { role: "system", content: role.personality },
           { role: "user", content: question },
         ]);
+        const { setCards: setCardsPost, cards: cardsPost } =
+          useCardState.getState();
+        setCardsPost({
+          ...cardsPost,
+          [role.id]: {
+            content: answer.content,
+            isLoading: false,
+          },
+        });
+
         return answer;
       });
 
       const roleAnswers = await Promise.all(rolePromises);
 
+      const { setCeo: setCeoPre } = useCardState.getState();
+      setCeoPre({
+        content: "",
+        isLoading: true,
+      });
       const ceoAnswer = await askLLM([
         { role: "system", content: "You are the CEO of the company" },
         {
@@ -108,9 +133,40 @@ const useGlobalState = create<GlobalState>((set, get) => ({
           )}`,
         },
       ]);
+      const { setCeo: setCeoPost } = useCardState.getState();
+      setCeoPost({
+        content: ceoAnswer.content,
+        isLoading: false,
+      });
 
       console.log("Role answers:", roleAnswers);
       console.log("CEO answer:", ceoAnswer);
+      const message: Message = {
+        id: new Date().getTime().toString(),
+        model: "gpt-4o-mini",
+        question,
+        timestamp: new Date().getTime(),
+        ceoAnswer: {
+          text: ceoAnswer.content,
+          inputTokens: ceoAnswer.usage.prompt_tokens,
+          outputTokens: ceoAnswer.usage.completion_tokens,
+        },
+        roleAnsers: roleAnswers.reduce((acc, answer, index) => {
+          acc[get().roles[index].id] = {
+            text: answer.content,
+            inputTokens: answer.usage.prompt_tokens,
+            outputTokens: answer.usage.completion_tokens,
+          };
+          return acc;
+        }, {} as Record<string, { text: string; inputTokens: number; outputTokens: number }>),
+      };
+
+      console.log(message);
+
+      // Add message to history
+      set((state) => ({
+        messages: [...state.messages, message],
+      }));
 
       // You can process the answers further here if needed
     } catch (error) {

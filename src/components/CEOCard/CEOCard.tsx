@@ -1,31 +1,26 @@
 import React from "react";
 import styles from "./CEOCard.module.css";
-import useGlobalState from "../../store/useGlobalState";
+import { useCardState } from "../../store/useCardState";
 
-interface CEOCardProps {
-  name: string;
-  title: string;
-  imageUrl: string;
-  description: string;
-}
-
-const CEOCard: React.FC<CEOCardProps> = ({
-  name,
-  title,
-  imageUrl,
-  description,
-}) => {
-  const { isCEOLoading } = useGlobalState();
+const CEOCard: React.FC = () => {
+  const { ceo } = useCardState();
+  const isCEOLoading = ceo.isLoading;
+  const content = ceo.content;
 
   return (
     <div className={`${styles.ceoCard} ${isCEOLoading ? styles.loading : ""}`}>
       <div className={styles.avatarContainer}>
-        <img src={imageUrl} alt={name} className={styles.avatar} />
+        <img
+          src={
+            "https://raw.githubusercontent.com/MacketSWE/honey-ginger-assets/main/monkeyceo.png"
+          }
+          alt={"ceo"}
+          className={styles.avatar}
+        />
       </div>
       <div className={styles.infoContainer}>
-        <h2 className={styles.name}>{name}</h2>
-        <h3 className={styles.title}>{title}</h3>
-        <p className={styles.description}>{description}</p>
+        <h2 className={styles.name}>{"CEO"}</h2>
+        <p className={styles.description}>{content}</p>
       </div>
       {isCEOLoading && (
         <div className={styles.loadingOverlay}>

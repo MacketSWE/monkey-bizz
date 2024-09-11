@@ -53,20 +53,10 @@ const MainPage: React.FC = () => {
         </button>
         <div className={styles.contentWrapper}>
           <h1 className={styles.header}>Monkey Bizz</h1>
-          <CEOCard
-            name="John Doe"
-            title="CEO & Founder"
-            imageUrl="https://raw.githubusercontent.com/MacketSWE/honey-ginger-assets/main/monkeyceo.png"
-            description="John Doe is the visionary leader behind Monkey Bizz, driving innovation and growth in the industry."
-          />
+          <CEOCard />
           <div className={styles.roleCardsContainer}>
-            {roles.map((role, index) => (
-              <RoleCard
-                key={index}
-                title={role.title}
-                description={role.description}
-                isLoading={role.isLoading}
-              />
+            {roles.map((role) => (
+              <RoleCard key={role.id} role={role} />
             ))}
           </div>
         </div>
