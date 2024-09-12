@@ -56,7 +56,7 @@
 
 .header {
   font-size: 3rem;
-  color: #333;
+  color: #545454;
   text-align: center;
 }
 
@@ -89,6 +89,31 @@
   font-size: 16px;
 }
 
-.businessInfoButton:hover {
-  background-color: #45a049;
+.businessInfoContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  user-select: none;
+}
+
+.businessInfo {
+  font-size: 1rem;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.businessInfo:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.editButton {
+  position: absolute;
+  top: 0px;
+  right: 3px;
+  pointer-events: none;
 }
