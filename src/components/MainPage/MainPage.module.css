@@ -75,20 +75,6 @@
   background-color: #218838;
 }
 
-.businessInfoButton {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  padding: 10px 15px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
 .businessInfoContainer {
   display: flex;
   align-items: center;
@@ -100,7 +86,7 @@
 .businessInfo {
   font-size: 1rem;
   padding: 10px 15px;
-  border: 2px solid #ccc;
+  border: 2px solid #9a9a9a;
   border-radius: 16px;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -109,6 +95,7 @@
 .businessInfo:hover {
   background-color: #f0f0f0;
   border-color: #999;
+  color: #6d6d6d;
 }
 
 .editButton {

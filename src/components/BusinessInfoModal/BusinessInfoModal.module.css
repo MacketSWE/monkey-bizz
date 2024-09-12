@@ -1,0 +1,37 @@
+.modalContent {
+  padding: 20px;
+  color: #6d6d6d;
+}
+
+.modalContent h2 {
+  margin-bottom: 20px;
+}
+
+.modalContent form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalContent label {
+  margin-bottom: 5px;
+}
+
+.modalContent input,
+.modalContent textarea {
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+.modalContent textarea {
+  resize: vertical;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.buttonContainer button {
+  padding: 5px 10px;
+}

@@ -7,6 +7,7 @@ import CEOCard from "../CEOCard/CEOCard";
 import RoleCard from "../RoleCard/RoleCard";
 import useGlobalState from "../../store/useGlobalState";
 import MessageHistory from "../MessageHistory/MessageHistory";
+import BusinessInfoModal from "../BusinessInfoModal/BusinessInfoModal";
 
 const MainPage: React.FC = () => {
   const {
@@ -16,6 +17,7 @@ const MainPage: React.FC = () => {
     isModalOpen,
     roles,
     businessInfo,
+    setBusinessInfo,
   } = useGlobalState();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -37,8 +39,7 @@ const MainPage: React.FC = () => {
   };
 
   const handleEditBusinessInfo = () => {
-    // TODO: Implement edit functionality
-    console.log("Edit business info clicked");
+    setIsModalOpen(true);
   };
 
   return (
@@ -94,12 +95,16 @@ const MainPage: React.FC = () => {
       <Modal>
         {isMobile && isModalOpen ? (
           <MessageHistory />
-        ) : (
-          <>
-            <h2>This is a Modal</h2>
-            <p>You can add any content here.</p>
-          </>
-        )}
+        ) : isModalOpen ? (
+          <BusinessInfoModal
+            businessInfo={businessInfo}
+            onSave={(updatedInfo) => {
+              setBusinessInfo(updatedInfo);
+              setIsModalOpen(false);
+            }}
+            onClose={() => setIsModalOpen(false)}
+          />
+        ) : null}
       </Modal>
     </div>
   );

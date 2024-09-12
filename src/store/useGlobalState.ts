@@ -17,6 +17,7 @@ interface GlobalState {
   askQuestion: (question: string) => void;
   roles: Role[];
   clearMessageHistory: () => void;
+  setBusinessInfo: (info: BusinessInfo) => void;
 }
 
 export const initialRoles: Role[] = [
@@ -44,7 +45,7 @@ export const initialRoles: Role[] = [
     id: "4",
     title: "Chief Technology Officer (CTO)",
     avatar:
-      "https://raw.githubusercontent.com/MacketSWE/company-management/main/src/assets/006-monkey.png?token=GHSAT0AAAAAACVDX4E5AQPNRGH6B46GT3X6ZWHXFAQ",
+      "https://raw.githubusercontent.com/MacketSWE/company-management/main/src/assets/006-monkey.png?token=GHSAT0AAAAAACVDX4E5AQPNRGH6B46GT3X6ZWHXFJQ",
     description:
       "You are the technological innovator at The Company, responsible for overseeing the development and implementation of technology solutions. You stay abreast of the latest tech trends and ensure that the company’s offerings, including full-stack solutions, mobile apps, and AI products, remain cutting-edge.",
     personality:
@@ -201,6 +202,10 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         messages: [],
       };
     }),
+  setBusinessInfo: (info) => {
+    set({ businessInfo: info });
+    localStorage.setItem("businessInfo", JSON.stringify(info));
+  },
 }));
 
 export default useGlobalState;
