@@ -9,8 +9,14 @@ import useGlobalState from "../../store/useGlobalState";
 import MessageHistory from "../MessageHistory/MessageHistory";
 
 const MainPage: React.FC = () => {
-  const { isDrawerOpen, toggleDrawer, setIsModalOpen, isModalOpen, roles } =
-    useGlobalState();
+  const {
+    isDrawerOpen,
+    toggleDrawer,
+    setIsModalOpen,
+    isModalOpen,
+    roles,
+    businessInfo,
+  } = useGlobalState();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -43,14 +49,10 @@ const MainPage: React.FC = () => {
             {isMobile ? "History" : isDrawerOpen ? "Close Drawer" : "History"}
           </button>
         )}
-        {/* <button
-          className={styles.businessInfoButton}
-          onClick={() => setIsModalOpen(true)}
-        >
-          Business Info
-        </button> */}
+
         <div className={styles.contentWrapper}>
           <h1 className={styles.header}>Monkey Bizz</h1>
+          <div className={styles.businessInfo}>{businessInfo.name}</div>
           <CEOCard />
           <div className={styles.roleCardsContainer}>
             {roles.map((role) => (

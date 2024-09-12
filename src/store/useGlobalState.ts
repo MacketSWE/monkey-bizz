@@ -1,11 +1,14 @@
-import create from "zustand";
+import { create } from "zustand";
 import { Role } from "../types/role";
 import { Message } from "../types/message";
 import { askLLM } from "../endpoints/askLLM";
 import { useCardState } from "./useCardState";
+import { BusinessInfo } from "../types/businessInfo";
+import { businessInfo } from "../fixtures/businessInfo";
 
 interface GlobalState {
   isDrawerOpen: boolean;
+  businessInfo: BusinessInfo;
   setIsDrawerOpen: (isOpen: boolean) => void;
   toggleDrawer: () => void;
   isModalOpen: boolean;
@@ -92,6 +95,9 @@ const ceoRole: Role = {
 
 const useGlobalState = create<GlobalState>((set, get) => ({
   isDrawerOpen: false,
+  businessInfo: JSON.parse(
+    localStorage.getItem("businessInfo") || JSON.stringify(businessInfo)
+  ),
   setIsDrawerOpen: (isOpen) => set({ isDrawerOpen: isOpen }),
   toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
   isModalOpen: false,
