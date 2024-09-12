@@ -4,5 +4,4 @@ export interface Role {
   description: string;
   avatar: string;
   personality: string;
-  isLoading: boolean;
 }
