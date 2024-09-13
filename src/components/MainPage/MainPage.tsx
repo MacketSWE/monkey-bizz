@@ -13,8 +13,8 @@ const MainPage: React.FC = () => {
   const {
     isDrawerOpen,
     toggleDrawer,
-    setIsModalOpen,
-    isModalOpen,
+    modalType,
+    setModalType,
     roles,
     businessInfo,
     setBusinessInfo,
@@ -32,14 +32,14 @@ const MainPage: React.FC = () => {
 
   const handleDrawerToggle = () => {
     if (isMobile) {
-      setIsModalOpen(true);
+      setModalType("messageHistory"); // Set modal type instead of isModalOpen
     } else {
       toggleDrawer();
     }
   };
 
   const handleEditBusinessInfo = () => {
-    setIsModalOpen(true);
+    setModalType("businessInfo"); // Set modal type instead of isModalOpen
   };
 
   return (
@@ -93,18 +93,17 @@ const MainPage: React.FC = () => {
         <ChatInput />
       </div>
       <Modal>
-        {isMobile && isModalOpen ? (
-          <MessageHistory />
-        ) : isModalOpen ? (
+        {modalType === "messageHistory" && <MessageHistory />}
+        {modalType === "businessInfo" && (
           <BusinessInfoModal
             businessInfo={businessInfo}
             onSave={(updatedInfo) => {
               setBusinessInfo(updatedInfo);
-              setIsModalOpen(false);
+              setModalType(null);
             }}
-            onClose={() => setIsModalOpen(false)}
+            onClose={() => setModalType(null)}
           />
-        ) : null}
+        )}
       </Modal>
     </div>
   );

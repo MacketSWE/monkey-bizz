@@ -11,8 +11,8 @@ interface GlobalState {
   businessInfo: BusinessInfo;
   setIsDrawerOpen: (isOpen: boolean) => void;
   toggleDrawer: () => void;
-  isModalOpen: boolean;
-  setIsModalOpen: (isOpen: boolean) => void;
+  modalType: string | null;
+  setModalType: (type: string | null) => void;
   messages: Message[];
   askQuestion: (question: string) => void;
   roles: Role[];
@@ -101,8 +101,8 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   ),
   setIsDrawerOpen: (isOpen) => set({ isDrawerOpen: isOpen }),
   toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
-  isModalOpen: false,
-  setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
+  modalType: null,
+  setModalType: (type) => set({ modalType: type }),
   messages: JSON.parse(localStorage.getItem("messages") || "[]"),
   askQuestion: async (question) => {
     try {
