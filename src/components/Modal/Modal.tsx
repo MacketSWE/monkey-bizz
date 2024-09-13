@@ -1,8 +1,12 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styles from "./Modal.module.css";
 import useGlobalState from "../../store/useGlobalState";
 
-const Modal: React.FC = ({ children }) => {
+interface ModalProps {
+  children: ReactNode;
+}
+
+const Modal: React.FC<ModalProps> = ({ children }) => {
   const { modalType, setModalType } = useGlobalState();
 
   if (!modalType) return null; // Modal is not open

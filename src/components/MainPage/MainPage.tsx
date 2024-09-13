@@ -8,6 +8,7 @@ import RoleCard from "../RoleCard/RoleCard";
 import useGlobalState from "../../store/useGlobalState";
 import MessageHistory from "../MessageHistory/MessageHistory";
 import BusinessInfoModal from "../BusinessInfoModal/BusinessInfoModal";
+import { useCardState } from "../../store/useCardState";
 
 const MainPage: React.FC = () => {
   const {
@@ -15,11 +16,14 @@ const MainPage: React.FC = () => {
     toggleDrawer,
     modalType,
     setModalType,
+    modalContent,
     roles,
     businessInfo,
     setBusinessInfo,
+    selectedRole,
   } = useGlobalState();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { cards } = useCardState();
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,14 +36,14 @@ const MainPage: React.FC = () => {
 
   const handleDrawerToggle = () => {
     if (isMobile) {
-      setModalType("messageHistory"); // Set modal type instead of isModalOpen
+      setModalType("messageHistory");
     } else {
       toggleDrawer();
     }
   };
 
   const handleEditBusinessInfo = () => {
-    setModalType("businessInfo"); // Set modal type instead of isModalOpen
+    setModalType("businessInfo");
   };
 
   return (
@@ -103,6 +107,19 @@ const MainPage: React.FC = () => {
             }}
             onClose={() => setModalType(null)}
           />
+        )}
+        {modalType === "roleAnswer" && selectedRole && (
+          <div>
+            <h2>{selectedRole.title}'s Response</h2>
+            <p>{cards[selectedRole.id]?.content || "No response available."}</p>
+          </div>
+        )}
+        {modalType === "upgradeInfo" && (
+          <div>
+            <h2>Upgrade</h2>
+            <p>{modalContent}</p>
+            <button onClick={() => setModalType(null)}>Close</button>
+          </div>
         )}
       </Modal>
     </div>

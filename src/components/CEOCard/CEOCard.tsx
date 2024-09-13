@@ -6,7 +6,7 @@ import useGlobalState from "../../store/useGlobalState";
 
 const CEOCard: React.FC = () => {
   const { ceo } = useCardState();
-  const { setIsModalOpen, setModalContent } = useGlobalState();
+  const { setModalType, setModalContent } = useGlobalState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedIntelligence, setSelectedIntelligence] = useState("Default");
 
@@ -23,7 +23,7 @@ const CEOCard: React.FC = () => {
   const handleUpgradeClick = () => {
     setIsDropdownOpen(false);
     setModalContent("Upgrade to Expert Intelligence");
-    setIsModalOpen(true);
+    setModalType("upgradeInfo");
   };
 
   return (
@@ -38,8 +38,9 @@ const CEOCard: React.FC = () => {
         />
       </div>
       <div className={styles.infoContainer}>
+        {/* Adjusted intelligence section */}
         <div className={styles.intelligence}>
-          <div>Intelligence:</div>
+          <span className={styles.intelligenceLabel}>Intelligence:</span>
           <div className={styles.dropdown}>
             <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               {selectedIntelligence}
