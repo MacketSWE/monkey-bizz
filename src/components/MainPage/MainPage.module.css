@@ -31,7 +31,7 @@
 
 .toggleButton {
   position: absolute;
-  top: 16px;
+  top: 20px;
   left: 16px;
 }
 
@@ -127,7 +127,7 @@
   align-items: flex-end;
 }
 
-.aboutLink {
+.aboutLinkDesktop {
   color: #f9ce41;
   font-weight: bold;
   cursor: pointer;
@@ -135,6 +135,20 @@
   transition: all 0.3s ease;
 }
 
-.aboutLink:hover {
+.aboutLinkDesktop:hover {
   text-decoration: underline;
+}
+
+.aboutButtonMobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .aboutLinkDesktop {
+    display: none;
+  }
+
+  .aboutButtonMobile {
+    display: block;
+  }
 }

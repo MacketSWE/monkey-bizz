@@ -57,10 +57,13 @@ const MainPage: React.FC = () => {
       }`}
     >
       <div className={styles.aboutLinkContainer}>
-        <div className={styles.aboutLink} onClick={handleAboutClick}>
+        <div className={styles.aboutLinkDesktop} onClick={handleAboutClick}>
           About | Contact | Privacy
         </div>
-        <button className={`${styles.button}`} onClick={handleAboutClick}>
+        <button
+          className={`${styles.button} ${styles.aboutButtonMobile}`}
+          onClick={handleAboutClick}
+        >
           About
         </button>
       </div>
