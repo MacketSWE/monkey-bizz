@@ -18,27 +18,24 @@
   margin-left: 200px;
 }
 
+.button {
+  padding: 10px;
+  background-color: rgb(81, 81, 81);
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
 .toggleButton {
   position: absolute;
   top: 16px;
   left: 16px;
-  padding: 10px;
-  background-color: rgb(81, 81, 81);
-  border: none;
-  cursor: pointer;
-  z-index: 10;
 }
 
-.aboutButton {
-  padding: 10px;
-  background-color: rgb(81, 81, 81);
-  border: none;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.toggleButton:hover,
-.aboutButton:hover {
+.button:hover {
   background-color: lightgray;
 }
 

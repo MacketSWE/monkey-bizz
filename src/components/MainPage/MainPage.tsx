@@ -60,7 +60,7 @@ const MainPage: React.FC = () => {
         <div className={styles.aboutLink} onClick={handleAboutClick}>
           About | Contact | Privacy
         </div>
-        <button className={styles.aboutButton} onClick={handleDrawerToggle}>
+        <button className={`${styles.button}`} onClick={handleAboutClick}>
           About
         </button>
       </div>
@@ -68,7 +68,10 @@ const MainPage: React.FC = () => {
       {!isMobile && <Drawer />}
       <div className={styles.mainContent}>
         {!isDrawerOpen && (
-          <button className={styles.toggleButton} onClick={handleDrawerToggle}>
+          <button
+            className={`${styles.button} ${styles.toggleButton}`}
+            onClick={handleDrawerToggle}
+          >
             {isMobile ? "History" : isDrawerOpen ? "Close Drawer" : "History"}
           </button>
         )}
