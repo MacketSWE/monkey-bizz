@@ -16,7 +16,6 @@ const MainPage: React.FC = () => {
     toggleDrawer,
     modalType,
     setModalType,
-    modalContent,
     roles,
     businessInfo,
     setBusinessInfo,
@@ -46,12 +45,19 @@ const MainPage: React.FC = () => {
     setModalType("businessInfo");
   };
 
+  const handleAboutClick = () => {
+    setModalType("about");
+  };
+
   return (
     <div
       className={`${styles.appContainer} ${
         isDrawerOpen && !isMobile ? styles.drawerOpen : ""
       }`}
     >
+      <div className={styles.aboutLink} onClick={handleAboutClick}>
+        About
+      </div>
       {!isMobile && <Drawer />}
       <div className={styles.mainContent}>
         {!isDrawerOpen && (
@@ -117,8 +123,13 @@ const MainPage: React.FC = () => {
         {modalType === "upgradeInfo" && (
           <div>
             <h2>Upgrade</h2>
-            <p>{modalContent}</p>
-            <button onClick={() => setModalType(null)}>Close</button>
+            <p>Upgrade upgrade</p>
+          </div>
+        )}
+        {modalType === "about" && (
+          <div>
+            <h2>About Monkey Bizz</h2>
+            <p>About about</p>
           </div>
         )}
       </Modal>

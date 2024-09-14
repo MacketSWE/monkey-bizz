@@ -104,3 +104,18 @@
   right: 3px;
   pointer-events: none;
 }
+
+.aboutLink {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: #c98613;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.aboutLink:hover {
+  text-decoration: underline;
+}

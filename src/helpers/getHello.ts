@@ -1,0 +1,35 @@
+const helloPhrases = [
+  "At your service",
+  "What is it that you need?",
+  "Ready to assist you",
+  "What can I do for you today?",
+  "I'm here to help",
+  "How may I be of assistance?",
+  "What questions do you have?",
+  "Let me know how I can support you",
+  "I'm all ears",
+  "Feel free to ask anything",
+  "Your wish is my command",
+  "I'm ready when you are",
+  "What's on your mind?",
+  "How can I make your day better?",
+  "I'm here to lend a hand",
+  "What would you like to know?",
+  "I'm at your disposal",
+  "What can I clarify for you?",
+  "I'm here to assist with any task",
+  "How can I be of service?",
+  "What's your question?",
+  "I'm here to listen and help",
+  "What would you like assistance with?",
+  "Ready to tackle any challenge",
+  "What's puzzling you?",
+  "How can I make your life easier?",
+  "I'm here to find solutions",
+  "What's your goal today?",
+  "Let's work together on this",
+];
+
+export const getHello = () => {
+  return helloPhrases[Math.floor(Math.random() * helloPhrases.length)];
+};

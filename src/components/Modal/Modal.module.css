@@ -24,6 +24,7 @@
   flex-direction: column;
   animation: slideIn 0.3s ease-out;
   position: relative; /* Ensure positioning context for the close button */
+  color: #000;
 }
 
 .scrollableContent {

@@ -16,7 +16,6 @@ interface GlobalState {
   modalType: string | null;
   setModalType: (type: string | null) => void;
   modalContent: string | null;
-  setModalContent: (content: string | null) => void;
   messages: Message[];
   askQuestion: (question: string) => void;
   roles: Role[];
@@ -47,7 +46,6 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   modalType: null,
   setModalType: (type) => set({ modalType: type }),
   modalContent: null,
-  setModalContent: (content) => set({ modalContent: content }),
   messages: JSON.parse(localStorage.getItem("messages") || "[]"),
   askQuestion: async (question) => {
     try {
