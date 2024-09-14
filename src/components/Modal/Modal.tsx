@@ -5,6 +5,7 @@ import MessageHistory from "../MessageHistory/MessageHistory";
 import { BusinessInfoModal } from "../BusinessInfo/BusinessInfoModal/BusinessInfoModal";
 import ReactMarkdown from "react-markdown";
 import { useCardState } from "../../store/useCardState";
+import { ModalTextArea } from "./components/ModalTextArea/ModalTextArea";
 
 const Modal: React.FC = () => {
   const {
@@ -53,43 +54,35 @@ const Modal: React.FC = () => {
         {modalType === "roleSettings" && selectedRole && (
           <div>
             <h2>{selectedRole.title}'s Settings</h2>
-            <div>
-              <label>Description:</label>
-              <input
-                type="text"
-                value={selectedRole.description}
-                onChange={(e) => console.log(e.target.value)}
-              />
-            </div>
-            <div>
-              <label>Personality:</label>
-              <input
-                type="text"
-                value={selectedRole.personality}
-                onChange={(e) => console.log(e.target.value)}
-              />
-            </div>
+            <ModalTextArea
+              label="Personality"
+              value={selectedRole.personality}
+              onChange={(e) => console.log(e.target.value)}
+            />
+            <ModalTextArea
+              label="Description"
+              value={selectedRole.description}
+              onChange={(e) => console.log(e.target.value)}
+            />
+            <button onClick={() => setModalType(null)}>Reset to default</button>
+            <button onClick={() => setModalType(null)}>Save</button>
           </div>
         )}
         {modalType === "ceoSettings" && (
           <div>
             <h2>CEO Settings</h2>
-            <div>
-              <label>Description:</label>
-              <input
-                type="text"
-                value={ceoRole.description}
-                onChange={(e) => console.log(e.target.value)}
-              />
-            </div>
-            <div>
-              <label>Personality:</label>
-              <input
-                type="text"
-                value={ceoRole.personality}
-                onChange={(e) => console.log(e.target.value)}
-              />
-            </div>
+            <ModalTextArea
+              label="Description"
+              value={ceoRole.description}
+              onChange={(e) => console.log(e.target.value)}
+            />
+            <ModalTextArea
+              label="Personality"
+              value={ceoRole.personality}
+              onChange={(e) => console.log(e.target.value)}
+            />
+            <button onClick={() => setModalType(null)}>Reset to default</button>
+            <button onClick={() => setModalType(null)}>Save</button>
           </div>
         )}
         {modalType === "upgradeInfo" && (
