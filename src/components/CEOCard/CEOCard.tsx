@@ -2,27 +2,19 @@ import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import styles from "./CEOCard.module.css";
 import { useCardState } from "../../store/useCardState";
+import Intelligence from "../Intelligence/Intelligence"; // Import the new component
+import { SettingsIcon } from "../../assets/SettingsIcon";
 import useGlobalState from "../../store/useGlobalState";
 
 const CEOCard: React.FC = () => {
   const { ceo } = useCardState();
-  const { setModalType } = useGlobalState();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedIntelligence, setSelectedIntelligence] = useState("Default");
-
+  const { setModalType } = useGlobalState();
   const isCEOLoading = ceo.isLoading;
   const content = ceo.content;
 
-  const handleIntelligenceChange = (value: string) => {
-    if (value !== "Expert") {
-      setSelectedIntelligence(value);
-      setIsDropdownOpen(false);
-    }
-  };
-
-  const handleUpgradeClick = () => {
-    setIsDropdownOpen(false);
-    setModalType("upgradeInfo");
+  const handleSettings = () => {
+    setModalType("ceoSettings");
   };
 
   return (
@@ -37,28 +29,14 @@ const CEOCard: React.FC = () => {
         />
       </div>
       <div className={styles.infoContainer}>
-        <div className={styles.intelligence}>
-          <span className={styles.intelligenceLabel}>Intelligence:</span>
-          <div className={styles.dropdown}>
-            <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-              {selectedIntelligence}
-            </button>
-            {isDropdownOpen && (
-              <div className={styles.dropdownContent}>
-                <div onClick={() => handleIntelligenceChange("Default")}>
-                  Default
-                </div>
-                <div className={styles.disabledOption}>Expert</div>
-                <div
-                  className={styles.upgradeLink}
-                  onClick={handleUpgradeClick}
-                >
-                  Tell me more!
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        <Intelligence
+          selectedIntelligence={selectedIntelligence}
+          setSelectedIntelligence={setSelectedIntelligence}
+        />
+        <SettingsIcon
+          className={styles.settingsIcon}
+          onPress={handleSettings}
+        />
         <h2 className={styles.name}>{"CEO"}</h2>
         <div className={styles.description}>
           <ReactMarkdown>{content || "How can I help?"}</ReactMarkdown>

@@ -91,81 +91,33 @@
   font-size: 14px;
 }
 
-.intelligence {
+.settingsIcon {
+  background-color: rgb(223, 223, 223);
   position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  top: 20px;
-  right: 20px;
-  font-size: 12px;
-  color: #6d6d6d;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  z-index: 100;
+  display: none; /* Hide by default on desktop */
 }
 
-.intelligenceLabel {
-  /* Additional styling if needed */
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown button {
-  background-color: #f1f1f1;
-  color: #333;
-  padding: 3px 8px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 12px;
-  height: 24px;
-  line-height: 1;
-}
-
-.dropdown button:hover {
-  background-color: #5a5a5a;
-  color: white;
-  border-radius: 4px;
-}
-
-.dropdownContent {
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 120px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.dropdownContent div {
-  color: #333;
-  padding: 8px 12px;
-  text-decoration: none;
+.ceoCard:hover .settingsIcon {
   display: block;
   cursor: pointer;
 }
 
-.dropdownContent div:hover {
-  background-color: #f1f1f1;
+.settingsIcon:hover {
+  cursor: pointer;
+  background-color: rgb(255, 170, 0);
+  transform: scale(1.1);
 }
 
-.disabledOption {
-  color: #999 !important;
-  cursor: not-allowed !important;
-  background-color: #f0f0f0;
-}
-
-.disabledOption:hover {
-  background-color: #f0f0f0 !important;
-}
-
-.upgradeLink {
-  background-color: #c98613;
-  color: white !important;
-}
-
-.upgradeLink:hover {
-  background-color: #a76f0f !important;
+@media (max-width: 767px) {
+  .settingsIcon {
+    display: block; /* Always show on mobile */
+    padding: 8px; /* Increased padding for mobile */
+  }
 }

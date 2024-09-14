@@ -13,6 +13,7 @@ const Modal: React.FC = () => {
     setBusinessInfo,
     businessInfo,
     selectedRole,
+    ceoRole,
   } = useGlobalState();
 
   const { cards } = useCardState();
@@ -65,6 +66,27 @@ const Modal: React.FC = () => {
               <input
                 type="text"
                 value={selectedRole.personality}
+                onChange={(e) => console.log(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
+        {modalType === "ceoSettings" && (
+          <div>
+            <h2>CEO Settings</h2>
+            <div>
+              <label>Description:</label>
+              <input
+                type="text"
+                value={ceoRole.description}
+                onChange={(e) => console.log(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Personality:</label>
+              <input
+                type="text"
+                value={ceoRole.personality}
                 onChange={(e) => console.log(e.target.value)}
               />
             </div>
