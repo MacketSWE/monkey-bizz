@@ -1,7 +1,7 @@
 - Add a listening state to the CEO card
 - Refine prompting
 - Add a favicon
-- Make it possible to delete a single message from history
+- Make it possible to delete a single message from history ⬅️
 - Add content to the about modal
 - Add an "Add business info" CTA
 

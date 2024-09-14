@@ -11,7 +11,7 @@
   flex-direction: column;
   transition: margin-left 0.3s ease-in-out;
   position: relative;
-  padding-bottom: 80px; /* Add padding to account for the chat input */
+  padding-bottom: 80px;
 }
 
 .appContainer.drawerOpen .mainContent {
