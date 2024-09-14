@@ -4,6 +4,7 @@ import useGlobalState from "../../store/useGlobalState";
 import { Role } from "../../types/role"; // Import the Role interface
 import { useCardState } from "../../store/useCardState"; // Import useCardState
 import { getHello } from "../../helpers/getHello";
+import { SettingsIcon } from "../../assets/SettingsIcon";
 
 const RoleCard: React.FC<{ role: Role }> = ({ role }) => {
   const { setModalType, setSelectedRole } = useGlobalState();
@@ -27,6 +28,7 @@ const RoleCard: React.FC<{ role: Role }> = ({ role }) => {
       role="button"
       tabIndex={0}
     >
+      <SettingsIcon className={styles.settingsIcon} />
       <h3 className={styles.title}>{role.title}</h3>
       {isLoading ? (
         <div className={styles.loadingIndicator}>Loading...</div>
