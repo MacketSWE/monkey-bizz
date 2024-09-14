@@ -1,0 +1,5 @@
+- Give the roles memory ✅
+- Add an about page
+- Refine prompting
+- Add a favicon
+- Make it possible to delete a single message from history

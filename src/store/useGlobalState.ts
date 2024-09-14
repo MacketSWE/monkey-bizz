@@ -6,6 +6,7 @@ import { useCardState } from "./useCardState";
 import { BusinessInfo } from "../types/businessInfo";
 import { businessInfo } from "../fixtures/businessInfo";
 import { initialRoles } from "../fixtures/initialRoles";
+import { LLMMessage } from "../types/llmMessage";
 
 interface GlobalState {
   isDrawerOpen: boolean;
@@ -66,8 +67,22 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       );
 
       const rolePromises = roles.map(async (role) => {
+        const roleHistory: LLMMessage[] = [];
+        get().messages.forEach((message) => {
+          if (message.roleAnsers[role.id]) {
+            roleHistory.push(
+              {
+                role: "user",
+                content: message.question,
+              },
+              { role: "assistant", content: message.roleAnsers[role.id].text }
+            );
+          }
+        });
+
         const answer = await askLLM([
           { role: "system", content: role.personality },
+          ...roleHistory,
           { role: "user", content: question },
         ]);
 
@@ -90,14 +105,27 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         content: "",
         isLoading: true,
       });
+      const ceoHistory: LLMMessage[] = [];
+      get().messages.forEach((message) => {
+        if (message.ceoAnswer) {
+          ceoHistory.push(
+            {
+              role: "user",
+              content: message.question,
+            },
+            { role: "assistant", content: message.ceoAnswer.text }
+          );
+        }
+      });
       const ceoAnswer = await askLLM([
         { role: "system", content: ceoRole.description },
+        ...ceoHistory,
         {
           role: "user",
           content: `This is the question: ${question}. This is what the others answered: ${roleAnswers.reduce(
             (acc, answer) => acc + answer.content,
             ""
-          )}`,
+          )}. Take all of this into account to answer the question, but give your own answer based on what you think is best.`,
         },
       ]);
       const { setCeo: setCeoPost } = useCardState.getState();
@@ -106,8 +134,6 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         isLoading: false,
       });
 
-      console.log("Role answers:", roleAnswers);
-      console.log("CEO answer:", ceoAnswer);
       const message: Message = {
         id: new Date().getTime().toString(),
         model: "gpt-4o-mini",
@@ -127,8 +153,6 @@ const useGlobalState = create<GlobalState>((set, get) => ({
           return acc;
         }, {} as Record<string, { text: string; inputTokens: number; outputTokens: number }>),
       };
-
-      console.log(message, "<--- this is the message");
 
       // Add message to history and save to localStorage
       set((state) => {

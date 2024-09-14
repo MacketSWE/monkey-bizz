@@ -162,10 +162,10 @@
 }
 
 .upgradeLink {
-  background-color: #4caf50;
+  background-color: #c98613;
   color: white !important;
 }
 
 .upgradeLink:hover {
-  background-color: #45a049 !important;
+  background-color: #a76f0f !important;
 }

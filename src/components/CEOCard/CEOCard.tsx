@@ -55,7 +55,7 @@ const CEOCard: React.FC = () => {
                   className={styles.upgradeLink}
                   onClick={handleUpgradeClick}
                 >
-                  Upgrade
+                  Tell me more!
                 </div>
               </div>
             )}
