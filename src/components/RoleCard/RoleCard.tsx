@@ -15,7 +15,8 @@ const RoleCard: React.FC<{ role: Role }> = ({ role }) => {
     setModalType("roleAnswer");
   };
 
-  const handleSettings = () => {
+  const handleSettings = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Stop event propagation
     setSelectedRole(role);
     setModalType("roleSettings");
   };
