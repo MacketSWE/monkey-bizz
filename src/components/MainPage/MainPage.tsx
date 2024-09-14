@@ -5,29 +5,15 @@ import ChatInput from "../ChatInput/ChatInput";
 import Modal from "../Modal/Modal";
 import CEOCard from "../CEOCard/CEOCard";
 import RoleCard from "../RoleCard/RoleCard";
-import ReactMarkdown from "react-markdown";
+
 import useGlobalState from "../../store/useGlobalState";
-import MessageHistory from "../MessageHistory/MessageHistory";
 
-import { useCardState } from "../../store/useCardState";
-
-import { BusinessInfoModal } from "../BusinessInfo/BusinessInfoModal/BusinessInfoModal";
 import { AboutSection } from "../AboutSection/AboutSection";
 import { BusinessInfo } from "../BusinessInfo/BusinessInfo";
 
 const MainPage: React.FC = () => {
-  const {
-    isDrawerOpen,
-    toggleDrawer,
-    modalType,
-    setModalType,
-    roles,
-    businessInfo,
-    setBusinessInfo,
-    selectedRole,
-  } = useGlobalState();
+  const { isDrawerOpen, toggleDrawer, setModalType, roles } = useGlobalState();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const { cards } = useCardState();
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,7 +40,6 @@ const MainPage: React.FC = () => {
     >
       {/* Use AboutLinkContainer */}
       <AboutSection />
-
       {!isMobile && <Drawer />}
       <div className={styles.mainContent}>
         {!isDrawerOpen && (
@@ -78,39 +63,7 @@ const MainPage: React.FC = () => {
         </div>
         <ChatInput />
       </div>
-      <Modal>
-        {modalType === "messageHistory" && <MessageHistory />}
-        {modalType === "businessInfo" && (
-          <BusinessInfoModal
-            businessInfo={businessInfo}
-            onSave={(updatedInfo) => {
-              setBusinessInfo(updatedInfo);
-              setModalType(null);
-            }}
-            onClose={() => setModalType(null)}
-          />
-        )}
-        {modalType === "roleAnswer" && selectedRole && (
-          <div>
-            <h2>{selectedRole.title}'s Response</h2>
-            <ReactMarkdown>
-              {cards[selectedRole.id]?.content || "No response available."}
-            </ReactMarkdown>
-          </div>
-        )}
-        {modalType === "upgradeInfo" && (
-          <div>
-            <h2>Upgrade</h2>
-            <p>Upgrade upgrade</p>
-          </div>
-        )}
-        {modalType === "about" && (
-          <div>
-            <h2>About Monkey Bizz</h2>
-            <p>About about</p>
-          </div>
-        )}
-      </Modal>
+      <Modal />
     </div>
   );
 };

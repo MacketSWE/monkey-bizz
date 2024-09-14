@@ -1,13 +1,21 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import styles from "./Modal.module.css";
 import useGlobalState from "../../store/useGlobalState";
+import MessageHistory from "../MessageHistory/MessageHistory";
+import { BusinessInfoModal } from "../BusinessInfo/BusinessInfoModal/BusinessInfoModal";
+import ReactMarkdown from "react-markdown";
+import { useCardState } from "../../store/useCardState";
 
-interface ModalProps {
-  children: ReactNode;
-}
+const Modal: React.FC = () => {
+  const {
+    modalType,
+    setModalType,
+    setBusinessInfo,
+    businessInfo,
+    selectedRole,
+  } = useGlobalState();
 
-const Modal: React.FC<ModalProps> = ({ children }) => {
-  const { modalType, setModalType } = useGlobalState();
+  const { cards } = useCardState();
 
   if (!modalType) return null; // Modal is not open
 
@@ -22,7 +30,37 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
         <button className={styles.closeButton} onClick={handleClose}>
           &times;
         </button>
-        {children}
+        {modalType === "messageHistory" && <MessageHistory />}
+        {modalType === "businessInfo" && (
+          <BusinessInfoModal
+            businessInfo={businessInfo}
+            onSave={(updatedInfo) => {
+              setBusinessInfo(updatedInfo);
+              setModalType(null);
+            }}
+            onClose={() => setModalType(null)}
+          />
+        )}
+        {modalType === "roleAnswer" && selectedRole && (
+          <div>
+            <h2>{selectedRole.title}'s Response</h2>
+            <ReactMarkdown>
+              {cards[selectedRole.id]?.content || "No response available."}
+            </ReactMarkdown>
+          </div>
+        )}
+        {modalType === "upgradeInfo" && (
+          <div>
+            <h2>Upgrade</h2>
+            <p>Upgrade upgrade</p>
+          </div>
+        )}
+        {modalType === "about" && (
+          <div>
+            <h2>About Monkey Bizz</h2>
+            <p>About about</p>
+          </div>
+        )}
       </div>
     </div>
   );
