@@ -5,6 +5,7 @@ import ChatInput from "../ChatInput/ChatInput";
 import Modal from "../Modal/Modal";
 import CEOCard from "../CEOCard/CEOCard";
 import RoleCard from "../RoleCard/RoleCard";
+import ReactMarkdown from "react-markdown";
 import useGlobalState from "../../store/useGlobalState";
 import MessageHistory from "../MessageHistory/MessageHistory";
 import BusinessInfoModal from "../BusinessInfoModal/BusinessInfoModal";
@@ -55,9 +56,15 @@ const MainPage: React.FC = () => {
         isDrawerOpen && !isMobile ? styles.drawerOpen : ""
       }`}
     >
-      <div className={styles.aboutLink} onClick={handleAboutClick}>
-        About
+      <div className={styles.aboutLinkContainer}>
+        <div className={styles.aboutLink} onClick={handleAboutClick}>
+          About | Contact | Privacy
+        </div>
+        <button className={styles.aboutButton} onClick={handleDrawerToggle}>
+          About
+        </button>
       </div>
+
       {!isMobile && <Drawer />}
       <div className={styles.mainContent}>
         {!isDrawerOpen && (
@@ -117,7 +124,9 @@ const MainPage: React.FC = () => {
         {modalType === "roleAnswer" && selectedRole && (
           <div>
             <h2>{selectedRole.title}'s Response</h2>
-            <p>{cards[selectedRole.id]?.content || "No response available."}</p>
+            <ReactMarkdown>
+              {cards[selectedRole.id]?.content || "No response available."}
+            </ReactMarkdown>
           </div>
         )}
         {modalType === "upgradeInfo" && (

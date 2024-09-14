@@ -58,3 +58,13 @@
   font-size: 0.8rem;
   color: #666;
 }
+
+.clearButton {
+  background-color: #868686;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 2rem;
+}

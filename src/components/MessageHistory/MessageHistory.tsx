@@ -40,9 +40,7 @@ const MessageHistory: React.FC = () => {
   return (
     <div className={styles.messageHistory}>
       <h2 className={styles.messageHistoryTitle}>Message History</h2>
-      <button onClick={handleClearHistory} className={styles.clearButton}>
-        Clear History
-      </button>
+
       <ul className={styles.messageList}>
         {messages.map((message) => (
           <li
@@ -63,6 +61,11 @@ const MessageHistory: React.FC = () => {
           </li>
         ))}
       </ul>
+      {messages.length > 0 && (
+        <button onClick={handleClearHistory} className={styles.clearButton}>
+          Clear History
+        </button>
+      )}
     </div>
   );
 };
