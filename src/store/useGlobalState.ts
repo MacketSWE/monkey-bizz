@@ -5,7 +5,7 @@ import { askLLM } from "../endpoints/askLLM";
 import { useCardState } from "./useCardState";
 import { BusinessInfo } from "../types/businessInfo";
 import { businessInfo } from "../fixtures/businessInfo";
-import { initialRoles } from "../fixtures/initialRoles";
+import { ceoRole, initialRoles } from "../fixtures/initialRoles";
 import { LLMMessage } from "../types/llmMessage";
 
 interface GlobalState {
@@ -19,23 +19,13 @@ interface GlobalState {
   messages: Message[];
   askQuestion: (question: string) => void;
   roles: Role[];
+  ceoRole: Role;
   clearMessageHistory: () => void;
   setBusinessInfo: (info: BusinessInfo) => void;
   selectedRole: Role | null;
   setSelectedRole: (role: Role | null) => void;
   deleteMessage: (id: string) => void;
 }
-
-const ceoRole: Role = {
-  id: "0",
-  title: "Chief Executive Officer (CEO)",
-  avatar:
-    "https://raw.githubusercontent.com/MacketSWE/company-management/main/src/assets/002-cat.png?token=GHSAT0AAAAAACVDX4E5QBRDPD6ID75U4YT6ZWHXEFA",
-  description:
-    "You are a visionary leader guiding the strategic direction of The Company. Your role is to analyze industry trends, predict future market shifts, and provide insights that help shape the company's long-term goals. Additionally, you take into consideration the insights and recommendations from all other roles to make well-rounded, informed decisions that drive the company forward.",
-  personality:
-    "You are confident, decisive, and have a forward-thinking mindset. You excel in seeing the big picture and are driven by a passion for innovation and growth. Your responses are assertive and to the point, with a focus on high-level strategy and visionary thinking. You value input from your team but are not afraid to make bold decisions to propel the company forward.",
-};
 
 const useGlobalState = create<GlobalState>((set, get) => ({
   isDrawerOpen: false,
@@ -65,7 +55,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         }, {} as Record<string, { content: string; isLoading: boolean }>)
       );
 
-      const rolePromises = roles.map(async (role) => {
+      const rolePromises = get().roles.map(async (role) => {
         const roleHistory: LLMMessage[] = [];
         get().messages.forEach((message) => {
           if (message.roleAnsers[role.id]) {
@@ -117,7 +107,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         }
       });
       const ceoAnswer = await askLLM([
-        { role: "system", content: ceoRole.description },
+        { role: "system", content: get().ceoRole.description },
         ...ceoHistory,
         {
           role: "user",
@@ -165,7 +155,12 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       console.error("Error in askQuestion:", error);
     }
   },
-  roles: initialRoles, // Ensure this is correctly set
+  ceoRole: JSON.parse(
+    localStorage.getItem("ceoRole") || JSON.stringify(ceoRole)
+  ),
+  roles: JSON.parse(
+    localStorage.getItem("roles") || JSON.stringify(initialRoles)
+  ),
   clearMessageHistory: () =>
     set(() => {
       localStorage.removeItem("messages");
