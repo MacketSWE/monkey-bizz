@@ -12,6 +12,7 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
 }
 
 .roleCard:hover {
@@ -47,9 +48,19 @@
 }
 
 .settingsIcon {
+  background-color: aqua;
   position: absolute;
   top: 10px;
   right: 10px;
+  padding: 5px;
+  border-radius: 5px;
   width: 20px;
   height: 20px;
+  z-index: 100;
+}
+
+.settingsIcon:hover {
+  cursor: pointer;
+  background-color: red;
+  transform: scale(1.1);
 }

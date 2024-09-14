@@ -49,6 +49,27 @@ const Modal: React.FC = () => {
             </ReactMarkdown>
           </div>
         )}
+        {modalType === "roleSettings" && selectedRole && (
+          <div>
+            <h2>{selectedRole.title}'s Settings</h2>
+            <div>
+              <label>Description:</label>
+              <input
+                type="text"
+                value={selectedRole.description}
+                onChange={(e) => console.log(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Personality:</label>
+              <input
+                type="text"
+                value={selectedRole.personality}
+                onChange={(e) => console.log(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
         {modalType === "upgradeInfo" && (
           <div>
             <h2>Upgrade</h2>

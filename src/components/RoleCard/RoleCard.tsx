@@ -15,6 +15,11 @@ const RoleCard: React.FC<{ role: Role }> = ({ role }) => {
     setModalType("roleAnswer");
   };
 
+  const handleSettings = () => {
+    setSelectedRole(role);
+    setModalType("roleSettings");
+  };
+
   const hello = useMemo(() => getHello(), []);
 
   // Get the content and loading state for this role
@@ -28,7 +33,7 @@ const RoleCard: React.FC<{ role: Role }> = ({ role }) => {
       role="button"
       tabIndex={0}
     >
-      <SettingsIcon className={styles.settingsIcon} />
+      <SettingsIcon className={styles.settingsIcon} onPress={handleSettings} />
       <h3 className={styles.title}>{role.title}</h3>
       {isLoading ? (
         <div className={styles.loadingIndicator}>Loading...</div>
