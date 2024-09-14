@@ -5,7 +5,7 @@ import { Message } from "../../types/message";
 import { useCardState } from "../../store/useCardState";
 
 const MessageHistory: React.FC = () => {
-  const { messages, clearMessageHistory } = useGlobalState();
+  const { messages, clearMessageHistory, deleteMessage } = useGlobalState();
   const { setCeo, setCards } = useCardState();
 
   const handleMessageClick = (message: Message) => {
@@ -17,13 +17,20 @@ const MessageHistory: React.FC = () => {
       Object.entries(message.roleAnsers).map(([key, value]) => [
         key,
         {
-          id: key,
           content: value.text,
           isLoading: false,
         },
       ])
     );
     setCards(roleAnswersMap);
+  };
+
+  const handleDeleteMessage = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: string
+  ) => {
+    e.stopPropagation(); // Prevent triggering handleMessageClick
+    deleteMessage(id);
   };
 
   const handleClearHistory = () => {
@@ -47,6 +54,12 @@ const MessageHistory: React.FC = () => {
             <span className={styles.messageTime}>
               {new Date(message.timestamp).toLocaleString()}
             </span>
+            <button
+              className={styles.deleteButton}
+              onClick={(e) => handleDeleteMessage(e, message.id)}
+            >
+              &times;
+            </button>
           </li>
         ))}
       </ul>

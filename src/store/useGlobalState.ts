@@ -23,6 +23,7 @@ interface GlobalState {
   setBusinessInfo: (info: BusinessInfo) => void;
   selectedRole: Role | null;
   setSelectedRole: (role: Role | null) => void;
+  deleteMessage: (id: string) => void;
 }
 
 const ceoRole: Role = {
@@ -178,6 +179,13 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   },
   selectedRole: null,
   setSelectedRole: (role) => set({ selectedRole: role }),
+  deleteMessage: (id) => {
+    set((state) => {
+      const updatedMessages = state.messages.filter((msg) => msg.id !== id);
+      localStorage.setItem("messages", JSON.stringify(updatedMessages));
+      return { messages: updatedMessages };
+    });
+  },
 }));
 
 export default useGlobalState;
