@@ -37,7 +37,6 @@ const CEOCard: React.FC = () => {
         />
       </div>
       <div className={styles.infoContainer}>
-        {/* Adjusted intelligence section */}
         <div className={styles.intelligence}>
           <span className={styles.intelligenceLabel}>Intelligence:</span>
           <div className={styles.dropdown}>

@@ -57,10 +57,26 @@
   width: 20px;
   height: 20px;
   z-index: 100;
+  display: none; /* Hide by default on desktop */
+}
+
+.roleCard:hover .settingsIcon {
+  display: block;
 }
 
 .settingsIcon:hover {
   cursor: pointer;
   background-color: rgb(255, 170, 0);
   transform: scale(1.1);
+}
+
+@media (max-width: 767px) {
+  .roleCard {
+    width: 90%;
+  }
+
+  .settingsIcon {
+    display: block; /* Always show on mobile */
+    padding: 8px; /* Increased padding for mobile */
+  }
 }
