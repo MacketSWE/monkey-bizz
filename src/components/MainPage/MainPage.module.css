@@ -93,23 +93,29 @@
 }
 
 .businessInfo:hover {
-  background-color: #f0f0f0;
-  border-color: #999;
-  color: #6d6d6d;
+  border-color: #f9ce41;
+  color: #f9ce41;
+  transform: scale(1.02);
 }
 
 .editButton {
   position: absolute;
   top: 0px;
-  right: 3px;
+  right: -20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
   pointer-events: none;
+}
+
+.businessInfoContainer:hover .editButton {
+  opacity: 1;
 }
 
 .aboutLink {
   position: fixed;
   top: 20px;
   right: 20px;
-  color: #c98613;
+  color: #f9ce41;
   font-weight: bold;
   cursor: pointer;
   z-index: 1000;
