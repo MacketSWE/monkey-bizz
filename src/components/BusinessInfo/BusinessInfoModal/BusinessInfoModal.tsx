@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BusinessInfo } from "../../types/businessInfo";
+import { BusinessInfo } from "../../../types/businessInfo";
 import styles from "./BusinessInfoModal.module.css";
 
 interface BusinessInfoModalProps {
@@ -8,7 +8,7 @@ interface BusinessInfoModalProps {
   onClose: () => void;
 }
 
-const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
+export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
   businessInfo,
   onSave,
   onClose,
@@ -59,5 +59,3 @@ const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
     </div>
   );
 };
-
-export default BusinessInfoModal;

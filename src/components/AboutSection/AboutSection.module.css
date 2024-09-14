@@ -1,0 +1,51 @@
+.aboutLinkContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.aboutLinkDesktop {
+  color: #f9ce41;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  margin-right: 20px;
+}
+
+.aboutLinkDesktop:hover {
+  text-decoration: underline;
+}
+
+.aboutButtonMobile {
+  display: none;
+}
+
+.button {
+  padding: 10px;
+  background-color: rgb(81, 81, 81);
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: lightgray;
+}
+
+@media (max-width: 768px) {
+  .aboutLinkDesktop {
+    display: none;
+  }
+
+  .aboutButtonMobile {
+    display: block;
+  }
+}

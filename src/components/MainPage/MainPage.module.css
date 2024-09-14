@@ -81,75 +81,17 @@
   background-color: #218838;
 }
 
-.businessInfoContainer {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  position: relative;
-  user-select: none;
-}
-
-.businessInfo {
-  font-size: 1rem;
-  padding: 10px 15px;
-  border: 2px solid #9a9a9a;
-  border-radius: 16px;
-  transition: all 0.3s ease;
+.commonButton {
+  padding: 10px;
+  background-color: rgb(81, 81, 81);
+  border: none;
   cursor: pointer;
+  z-index: 10;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-.businessInfo:hover {
-  border-color: #f9ce41;
-  color: #f9ce41;
-  transform: scale(1.02);
-}
-
-.editButton {
-  position: absolute;
-  top: 0px;
-  right: -20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.businessInfoContainer:hover .editButton {
-  opacity: 1;
-}
-
-.aboutLinkContainer {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.aboutLinkDesktop {
-  color: #f9ce41;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  margin-right: 20px;
-}
-
-.aboutLinkDesktop:hover {
-  text-decoration: underline;
-}
-
-.aboutButtonMobile {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .aboutLinkDesktop {
-    display: none;
-  }
-
-  .aboutButtonMobile {
-    display: block;
-  }
+.commonButton:hover {
+  background-color: lightgray;
 }

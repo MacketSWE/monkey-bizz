@@ -1,0 +1,35 @@
+.businessInfoContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  user-select: none;
+}
+
+.businessInfo {
+  font-size: 1rem;
+  padding: 10px 15px;
+  border: 2px solid #9a9a9a;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.businessInfo:hover {
+  border-color: #f9ce41;
+  color: #f9ce41;
+  transform: scale(1.02);
+}
+
+.editButton {
+  position: absolute;
+  top: 0px;
+  right: -20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.businessInfoContainer:hover .editButton {
+  opacity: 1;
+}
