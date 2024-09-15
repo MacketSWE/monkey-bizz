@@ -15,6 +15,9 @@ const Modal: React.FC = () => {
     businessInfo,
     selectedRole,
     ceoRole,
+    setRoles,
+    setCeoRole,
+    setSelectedRole,
   } = useGlobalState();
 
   const { cards } = useCardState();
@@ -23,6 +26,19 @@ const Modal: React.FC = () => {
 
   const handleClose = () => {
     setModalType(null);
+  };
+
+  const handleRoleChange = (field: string, value: string) => {
+    if (selectedRole) {
+      const updatedRole = { ...selectedRole, [field]: value };
+      setRoles(updatedRole);
+      setSelectedRole(updatedRole);
+    }
+  };
+
+  const handleCeoChange = (field: string, value: string) => {
+    const updatedCeoRole = { ...ceoRole, [field]: value };
+    setCeoRole(updatedCeoRole);
   };
 
   return (
@@ -57,12 +73,12 @@ const Modal: React.FC = () => {
             <ModalTextArea
               label="Personality"
               value={selectedRole.personality}
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => handleRoleChange("personality", e.target.value)}
             />
             <ModalTextArea
               label="Description"
               value={selectedRole.description}
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => handleRoleChange("description", e.target.value)}
             />
             <button onClick={() => setModalType(null)}>Reset to default</button>
             <button onClick={() => setModalType(null)}>Save</button>
@@ -74,12 +90,12 @@ const Modal: React.FC = () => {
             <ModalTextArea
               label="Description"
               value={ceoRole.description}
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => handleCeoChange("description", e.target.value)}
             />
             <ModalTextArea
               label="Personality"
               value={ceoRole.personality}
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => handleCeoChange("personality", e.target.value)}
             />
             <button onClick={() => setModalType(null)}>Reset to default</button>
             <button onClick={() => setModalType(null)}>Save</button>

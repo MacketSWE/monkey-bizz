@@ -25,6 +25,8 @@ interface GlobalState {
   selectedRole: Role | null;
   setSelectedRole: (role: Role | null) => void;
   deleteMessage: (id: string) => void;
+  setRoles: (updatedRole: Role) => void;
+  setCeoRole: (updatedCeoRole: Role) => void;
 }
 
 const useGlobalState = create<GlobalState>((set, get) => ({
@@ -179,6 +181,21 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       const updatedMessages = state.messages.filter((msg) => msg.id !== id);
       localStorage.setItem("messages", JSON.stringify(updatedMessages));
       return { messages: updatedMessages };
+    });
+  },
+  setRoles: (updatedRole) => {
+    set((state) => {
+      const updatedRoles = state.roles.map((role) =>
+        role.id === updatedRole.id ? updatedRole : role
+      );
+      localStorage.setItem("roles", JSON.stringify(updatedRoles));
+      return { roles: updatedRoles };
+    });
+  },
+  setCeoRole: (updatedCeoRole) => {
+    set(() => {
+      localStorage.setItem("ceoRole", JSON.stringify(updatedCeoRole));
+      return { ceoRole: updatedCeoRole };
     });
   },
 }));
