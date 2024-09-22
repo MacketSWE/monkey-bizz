@@ -1,10 +1,13 @@
 - Add a listening state to the CEO card
+- Add business info to prompt
 - Refine prompting
 - Add a favicon ⬅️
 - Add content to the about modal
 - Add an "Add business info" CTA
 
 
+- Add a better business example ✅
+- Reset business info functionality✅
 - Give the roles memory ✅
 - Add an about modal ✅
 - Add empty state to the roles ✅

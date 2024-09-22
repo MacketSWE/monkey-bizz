@@ -4,7 +4,7 @@ import { Message } from "../types/message";
 import { askLLM } from "../endpoints/askLLM";
 import { useCardState } from "./useCardState";
 import { BusinessInfo } from "../types/businessInfo";
-import { businessInfo } from "../fixtures/businessInfo";
+import { defaultBusinessInfo } from "../defaults/defaultBusinessInfo";
 import { ceoRole, initialRoles } from "../fixtures/initialRoles";
 import { LLMMessage } from "../types/llmMessage";
 
@@ -27,13 +27,12 @@ interface GlobalState {
   deleteMessage: (id: string) => void;
   setRoles: (updatedRole: Role) => void;
   setCeoRole: (updatedCeoRole: Role) => void;
+  resetBusinessInfo: () => void;
 }
 
 const useGlobalState = create<GlobalState>((set, get) => ({
   isDrawerOpen: false,
-  businessInfo: JSON.parse(
-    localStorage.getItem("businessInfo") || JSON.stringify(businessInfo)
-  ),
+  businessInfo: defaultBusinessInfo,
   setIsDrawerOpen: (isOpen) => set({ isDrawerOpen: isOpen }),
   toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
   modalType: null,
@@ -173,6 +172,10 @@ const useGlobalState = create<GlobalState>((set, get) => ({
   setBusinessInfo: (info) => {
     set({ businessInfo: info });
     localStorage.setItem("businessInfo", JSON.stringify(info));
+  },
+  resetBusinessInfo: () => {
+    set({ businessInfo: defaultBusinessInfo });
+    localStorage.setItem("businessInfo", JSON.stringify(defaultBusinessInfo));
   },
   selectedRole: null,
   setSelectedRole: (role) => set({ selectedRole: role }),

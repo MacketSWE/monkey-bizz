@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import { BusinessInfo } from "../../../types/businessInfo";
+import React, { useState, useEffect } from "react";
 import styles from "./BusinessInfoModal.module.css";
+import useGlobalState from "../../../store/useGlobalState";
 
 interface BusinessInfoModalProps {
-  businessInfo: BusinessInfo;
-  onSave: (updatedInfo: BusinessInfo) => void;
   onClose: () => void;
 }
 
 export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
-  businessInfo,
-  onSave,
   onClose,
 }) => {
+  const { businessInfo, setBusinessInfo, resetBusinessInfo } = useGlobalState();
   const [editedInfo, setEditedInfo] = useState(businessInfo);
+
+  useEffect(() => {
+    setEditedInfo(businessInfo);
+  }, [businessInfo]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -24,7 +25,12 @@ export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(editedInfo);
+    setBusinessInfo(editedInfo);
+    onClose();
+  };
+
+  const handleReset = () => {
+    resetBusinessInfo();
   };
 
   return (
@@ -53,6 +59,9 @@ export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
           <button type="submit">Save</button>
           <button type="button" onClick={onClose}>
             Cancel
+          </button>
+          <button type="button" onClick={handleReset}>
+            Reset
           </button>
         </div>
       </form>
