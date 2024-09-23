@@ -27,16 +27,17 @@ const CEOCard: React.FC = () => {
           alt={"ceo"}
           className={styles.avatar}
         />
+        <SettingsIcon
+          className={styles.settingsIcon}
+          onPress={handleSettings}
+        />
       </div>
       <div className={styles.infoContainer}>
         <Intelligence
           selectedIntelligence={selectedIntelligence}
           setSelectedIntelligence={setSelectedIntelligence}
         />
-        <SettingsIcon
-          className={styles.settingsIcon}
-          onPress={handleSettings}
-        />
+
         <h2 className={styles.name}>{"CEO"}</h2>
         <div className={styles.description}>
           <ReactMarkdown>{content || "How can I help?"}</ReactMarkdown>
