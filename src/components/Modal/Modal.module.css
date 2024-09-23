@@ -86,3 +86,10 @@
 .scrollableContent::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.roleModal {
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

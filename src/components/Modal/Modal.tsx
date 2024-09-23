@@ -11,8 +11,6 @@ const Modal: React.FC = () => {
   const {
     modalType,
     setModalType,
-    setBusinessInfo,
-    businessInfo,
     selectedRole,
     ceoRole,
     setRoles,
@@ -50,14 +48,7 @@ const Modal: React.FC = () => {
         </button>
         {modalType === "messageHistory" && <MessageHistory />}
         {modalType === "businessInfo" && (
-          <BusinessInfoModal
-            businessInfo={businessInfo}
-            onSave={(updatedInfo) => {
-              setBusinessInfo(updatedInfo);
-              setModalType(null);
-            }}
-            onClose={() => setModalType(null)}
-          />
+          <BusinessInfoModal onClose={() => setModalType(null)} />
         )}
         {modalType === "roleAnswer" && selectedRole && (
           <div>
@@ -68,27 +59,27 @@ const Modal: React.FC = () => {
           </div>
         )}
         {modalType === "roleSettings" && selectedRole && (
-          <div>
+          <div className={styles.roleModal}>
             <h2>{selectedRole.title}'s Settings</h2>
+            <ModalTextArea
+              label="Role description"
+              value={selectedRole.description}
+              onChange={(e) => handleRoleChange("description", e.target.value)}
+            />
             <ModalTextArea
               label="Personality"
               value={selectedRole.personality}
               onChange={(e) => handleRoleChange("personality", e.target.value)}
-            />
-            <ModalTextArea
-              label="Description"
-              value={selectedRole.description}
-              onChange={(e) => handleRoleChange("description", e.target.value)}
             />
             <button onClick={() => setModalType(null)}>Reset to default</button>
             <button onClick={() => setModalType(null)}>Save</button>
           </div>
         )}
         {modalType === "ceoSettings" && (
-          <div>
+          <div className={styles.roleModal}>
             <h2>CEO Settings</h2>
             <ModalTextArea
-              label="Description"
+              label="Role description"
               value={ceoRole.description}
               onChange={(e) => handleCeoChange("description", e.target.value)}
             />
