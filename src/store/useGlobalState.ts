@@ -3,42 +3,51 @@ import { Role } from "../types/role";
 import { Message } from "../types/message";
 import { askLLM } from "../endpoints/askLLM";
 import { useCardState } from "./useCardState";
-import { BusinessInfo } from "../types/businessInfo";
-import { defaultBusinessInfo } from "../defaults/defaultBusinessInfo";
 import { ceoRole, initialRoles } from "../fixtures/initialRoles";
 import { LLMMessage } from "../types/llmMessage";
+import { useBusinessInfo } from "./useBusinessInfo";
 
 interface GlobalState {
   isDrawerOpen: boolean;
-  businessInfo: BusinessInfo;
-  setIsDrawerOpen: (isOpen: boolean) => void;
-  toggleDrawer: () => void;
   modalType: string | null;
-  setModalType: (type: string | null) => void;
   modalContent: string | null;
   messages: Message[];
-  askQuestion: (question: string) => void;
   roles: Role[];
   ceoRole: Role;
-  clearMessageHistory: () => void;
-  setBusinessInfo: (info: BusinessInfo) => void;
   selectedRole: Role | null;
+
+  setIsDrawerOpen: (isOpen: boolean) => void;
+  toggleDrawer: () => void;
+  setModalType: (type: string | null) => void;
+  askQuestion: (question: string) => void;
+  clearMessageHistory: () => void;
   setSelectedRole: (role: Role | null) => void;
   deleteMessage: (id: string) => void;
   setRoles: (updatedRole: Role) => void;
   setCeoRole: (updatedCeoRole: Role) => void;
-  resetBusinessInfo: () => void;
 }
 
 const useGlobalState = create<GlobalState>((set, get) => ({
+  // Values
   isDrawerOpen: false,
-  businessInfo: defaultBusinessInfo,
-  setIsDrawerOpen: (isOpen) => set({ isDrawerOpen: isOpen }),
-  toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
   modalType: null,
-  setModalType: (type) => set({ modalType: type }),
   modalContent: null,
   messages: JSON.parse(localStorage.getItem("messages") || "[]"),
+  ceoRole: JSON.parse(
+    localStorage.getItem("ceoRole") || JSON.stringify(ceoRole)
+  ),
+  roles: JSON.parse(
+    localStorage.getItem("roles") || JSON.stringify(initialRoles)
+  ),
+  selectedRole: null,
+
+  // Functions
+  setIsDrawerOpen: (isOpen) => set({ isDrawerOpen: isOpen }),
+
+  toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
+
+  setModalType: (type) => set({ modalType: type }),
+
   askQuestion: async (question) => {
     try {
       console.log("Asking question:", question);
@@ -70,8 +79,24 @@ const useGlobalState = create<GlobalState>((set, get) => ({
           }
         });
 
+        const systemPrompt = `
+        ===================================================
+        This is your role: ${role.description}. 
+        ===================================================
+        This is your personality: ${role.personality}.
+        ===================================================
+        This is the business info: ${JSON.stringify(
+          useBusinessInfo.getState().businessInfo,
+          null,
+          2
+        )}.
+        ===================================================
+        `;
+
+        console.log("System prompt:", systemPrompt);
+
         const answer = await askLLM([
-          { role: "system", content: role.personality },
+          { role: "system", content: systemPrompt },
           ...roleHistory,
           { role: "user", content: question },
         ]);
@@ -156,12 +181,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       console.error("Error in askQuestion:", error);
     }
   },
-  ceoRole: JSON.parse(
-    localStorage.getItem("ceoRole") || JSON.stringify(ceoRole)
-  ),
-  roles: JSON.parse(
-    localStorage.getItem("roles") || JSON.stringify(initialRoles)
-  ),
+
   clearMessageHistory: () =>
     set(() => {
       localStorage.removeItem("messages");
@@ -169,16 +189,9 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         messages: [],
       };
     }),
-  setBusinessInfo: (info) => {
-    set({ businessInfo: info });
-    localStorage.setItem("businessInfo", JSON.stringify(info));
-  },
-  resetBusinessInfo: () => {
-    set({ businessInfo: defaultBusinessInfo });
-    localStorage.setItem("businessInfo", JSON.stringify(defaultBusinessInfo));
-  },
-  selectedRole: null,
+
   setSelectedRole: (role) => set({ selectedRole: role }),
+
   deleteMessage: (id) => {
     set((state) => {
       const updatedMessages = state.messages.filter((msg) => msg.id !== id);
@@ -186,6 +199,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       return { messages: updatedMessages };
     });
   },
+
   setRoles: (updatedRole) => {
     set((state) => {
       const updatedRoles = state.roles.map((role) =>
@@ -195,6 +209,7 @@ const useGlobalState = create<GlobalState>((set, get) => ({
       return { roles: updatedRoles };
     });
   },
+
   setCeoRole: (updatedCeoRole) => {
     set(() => {
       localStorage.setItem("ceoRole", JSON.stringify(updatedCeoRole));

@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./BusinessInfo.module.css";
 import useGlobalState from "../../store/useGlobalState";
+import { useBusinessInfo } from "../../store/useBusinessInfo";
 
 export const BusinessInfo: React.FC = () => {
-  const { businessInfo, setModalType } = useGlobalState();
+  const { setModalType } = useGlobalState();
+  const { businessInfo } = useBusinessInfo();
 
   const handleEditBusinessInfo = () => {
     setModalType("businessInfo");

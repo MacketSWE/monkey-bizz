@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./BusinessInfoModal.module.css";
-import useGlobalState from "../../../store/useGlobalState";
 import { ModalTextArea } from "../../Modal/components/ModalTextArea/ModalTextArea";
+import { useBusinessInfo } from "../../../store/useBusinessInfo";
+import { defaultBusinessInfo } from "../../../defaults/defaultBusinessInfo";
 
 interface BusinessInfoModalProps {
   onClose: () => void;
@@ -10,7 +11,7 @@ interface BusinessInfoModalProps {
 export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
   onClose,
 }) => {
-  const { businessInfo, setBusinessInfo, resetBusinessInfo } = useGlobalState();
+  const { businessInfo, setBusinessInfo } = useBusinessInfo();
   const [editedInfo, setEditedInfo] = useState(businessInfo);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
   };
 
   const handleReset = () => {
-    resetBusinessInfo();
+    setBusinessInfo(defaultBusinessInfo);
   };
 
   return (
