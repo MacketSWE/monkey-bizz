@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./BusinessInfoModal.module.css";
 import useGlobalState from "../../../store/useGlobalState";
+import { ModalTextArea } from "../../Modal/components/ModalTextArea/ModalTextArea";
 
 interface BusinessInfoModalProps {
   onClose: () => void;
@@ -44,15 +45,13 @@ export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
           name="name"
           value={editedInfo.name}
           onChange={handleChange}
+          className={styles.modalInput}
         />
 
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
+        <ModalTextArea
+          label="Description"
           value={editedInfo.description}
           onChange={handleChange}
-          rows={4}
         />
 
         <div className={styles.buttonContainer}>
