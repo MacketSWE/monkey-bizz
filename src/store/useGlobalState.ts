@@ -65,6 +65,20 @@ const useGlobalState = create<GlobalState>((set, get) => ({
         }, {} as Record<string, { content: string; isLoading: boolean }>)
       );
 
+      const getSystemPrompt = (role: Role) => `
+        ===================================================
+        This is your role: ${role.description}. 
+        ===================================================
+        This is your personality: ${role.personality}.
+        ===================================================
+        This is the business info: ${JSON.stringify(
+          useBusinessInfo.getState().businessInfo,
+          null,
+          2
+        )}.
+        ===================================================
+        `;
+
       const rolePromises = get().roles.map(async (role) => {
         const roleHistory: LLMMessage[] = [];
         get().messages.forEach((message) => {
@@ -79,24 +93,8 @@ const useGlobalState = create<GlobalState>((set, get) => ({
           }
         });
 
-        const systemPrompt = `
-        ===================================================
-        This is your role: ${role.description}. 
-        ===================================================
-        This is your personality: ${role.personality}.
-        ===================================================
-        This is the business info: ${JSON.stringify(
-          useBusinessInfo.getState().businessInfo,
-          null,
-          2
-        )}.
-        ===================================================
-        `;
-
-        console.log("System prompt:", systemPrompt);
-
         const answer = await askLLM([
-          { role: "system", content: systemPrompt },
+          { role: "system", content: getSystemPrompt(role) },
           ...roleHistory,
           { role: "user", content: question },
         ]);
@@ -132,17 +130,28 @@ const useGlobalState = create<GlobalState>((set, get) => ({
           );
         }
       });
-      const ceoAnswer = await askLLM([
-        { role: "system", content: get().ceoRole.description },
+
+      const ceoPrompt: LLMMessage[] = [
+        { role: "system", content: getSystemPrompt(get().ceoRole) },
         ...ceoHistory,
         {
           role: "user",
-          content: `This is the question: ${question}. This is what the others answered: ${roleAnswers.reduce(
+          content: `
+          ===================================================
+          This is the users input: ${question}.
+          ===================================================
+          This is what the others answered: ${roleAnswers.reduce(
             (acc, answer) => acc + answer.content,
             ""
-          )}. Take all of this into account to answer the question, but give your own answer based on what you think is best.`,
+          )}.
+          
+          ===================================================
+          Take all of this into account to answer the user, but give your own answer based on what you think is best.`,
         },
-      ]);
+      ];
+
+      const ceoAnswer = await askLLM(ceoPrompt);
+
       const { setCeo: setCeoPost } = useCardState.getState();
       setCeoPost({
         content: ceoAnswer.content,

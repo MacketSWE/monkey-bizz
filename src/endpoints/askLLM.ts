@@ -1,14 +1,13 @@
 import { LLMMessage } from "../types/llmMessage";
 
-export const askLLM = async (messages: LLMMessage[], model = "gpt-4o-mini") => {
-  const res = await fetch(`https://honeyginger-dev.onrender.com/api/quiz`, {
+export const askLLM = async (messages: LLMMessage[]) => {
+  const res = await fetch(`https://honeyginger-dev.onrender.com/api/mbizz`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       messages,
-      model,
     }),
   });
   const data = await res.json();
